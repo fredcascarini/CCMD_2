@@ -96,6 +96,7 @@ class IonType {
     bool is_heated;
 
     float A21;			   ///< Einstein A21 Coefficient
+	int ElecState;		   ///< Electronic energy level, 0 == Ground State, 1 == Excited State, (2 == Dark State)
 
     // IonType(IonType&&) = default;
     // IonType(const IonType& ) = delete;
@@ -161,7 +162,6 @@ class SimParams {
 
 class LaserParams {
  public:
-	explicit LaserParams(const std::string& file_name);
 
 	// Wavelength of laser
 	float wavelength;

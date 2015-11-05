@@ -600,4 +600,10 @@ LaserParams::LaserParams(const std::string& file_name) {
         log.error(e.what());
         throw std::runtime_error("Error reading Laser params.");
     }
+	
+	log.info("Laser parameters:");
+    log.info("\tWavelength: " + std::to_string(wavelength));
+    log.info("\tdelta: " + std::to_string(delta));
+    log.info("\tI/Isat: " + std::to_string(IdIsat);
+
 }

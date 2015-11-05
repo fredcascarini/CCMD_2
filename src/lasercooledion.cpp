@@ -65,8 +65,8 @@ inline void LaserCooledIon::kick(double dt) {
     // 1D Laser cooling friction force
     // This force must be evaluated last to allow its effect to be
     // undone by the call to velocity_scale
-    Vector3D friction = get_friction();
-    this->Ion::kick(dt, -friction);
+    if (ionType_.ElecState == 1) Emit();
+	else if (ionType_.ElecState == 0) Absorb();
 
     return;
 }
@@ -76,23 +76,22 @@ inline void LaserCooledIon::kick(double dt) {
  * @brief Find the stimulated emission/absorption probability based on the spontaneous emission probability and information about the
  * laser beam
  *
- * @param vel	ion velocity
  * @param lp	A pointer to the laser parameters
  * @param type	A pointer to the ion parameters 
  */
-float fscatt(Vector3D vel, const LaserParams& lp, const IonType& type) {
+double LaserCooledIon::fscatt() {
     
-    float pi = 3.14159265359;
-    double Gamma = type.A21;
-    double IdIsat = lp.IdIsat;
-    double delta = lp.delta;
+    double pi = 3.14159265359;
+    double Gamma = ionType_.A21;
+    double IdIsat = lp_.IdIsat;
+    double delta = lp_.delta;
 	double Gamma3 = pow(Gamma,3);
 	double Gamma2 = std::pow(Gamma,2);
-	Vector3D k(0,0,(2*pi) / lp.wavelength );
+	Vector3D k(0,0,(2*pi) / lp_.wavelength );
     
     double gamma = 0.5 * (Gamma3);
     gamma *= IdIsat;
-    double x = 1;//delta - dot(vel,k);
+    double x = delta ;//- dot(vel_,k);
     double x2 = std::pow(x,2);
     gamma /= (Gamma2 + (4 * x2));
     return gamma;
@@ -103,59 +102,49 @@ float fscatt(Vector3D vel, const LaserParams& lp, const IonType& type) {
 /**
  * @brief Increase the velocity by a vector orientated randomly over a sphere
  *
- * @param vel	ion velocity
  * @param lp	A pointer to the laser parameters
  * @param type	A pointer to the ion parameters 
  */
-void isoEmit(Vector3D vel, const LaserParams& lp, const IonType& type){
+void LaserCooledIon::isoEmit(){
     
-    float h = 6.62607*std::pow(10,-34);
-    float pi = 3.14159265359;
-    
-    float rnumu = 0; //random.random();
-    float rnumv = 0; //random.random();
-    float theta = 2 * pi * rnumu;
-    float phi = acos((2 * rnumv) -1);
-    float x = cos(theta) * sin(phi);
-    float y = sin(theta) * sin(phi);
-    float z = cos(phi);
-    Vector3D increase(x * (h/lp.wavelength), y * (h/lp.wavelength), z * (h/lp.wavelength));
-    increase /= type.mass;
-	vel += increase
+	double h = 6.62607*std::pow(10,-34);
+	
+    Vector3D SphVec = heater_.random_sphere_vector();
+	SphVec *= h/lp_.wavelength;
+    SphVec /= ionType_.mass;
+	vel_ += SphVec;
     
     return;
 }
 
 //added function
-void Emit(Vector3D vel, const IonType& type, const LaserParams& lp) {
+void LaserCooledIon::Emit() {
     
-    float dt = 1.0*std::pow(10,-9);
-    float fs = fscatt(vel, lp, type); //Probability of stimulated emission s^-1
+    double dt = 1.0*std::pow(10,-9);
+    double fs = fscatt(); //Probability of stimulated emission s^-1
     fs += 1.4*std::pow(10,-8); //Probability of spontaneous emission s^-1 from NIST
     fs *= dt;
     
-    //number = sum(1 for item in r if item <= fscatt);
-    
-    //for i in range(number){
-    isoEmit(vel, lp, type);
+    isoEmit();
+	//ionType_.ElecState-- ;
     return;
 }	
 
 // added function  
-void Absorb(Vector3D vel, const IonType& type, const LaserParams& lp){
+void LaserCooledIon::Absorb(){
 
-    float h = 6.62607*std::pow(10,-34);
-    float dt = 1.0*std::pow(10,-9);
-    float fs = fscatt(vel, lp, type); //Probability of stimulated absorption s^-1
+    double h = 6.62607*std::pow(10,-34);
+    double dt = 1.0*std::pow(10,-9);
+    double fs = fscatt(); //Probability of stimulated absorption s^-1
     fs *= dt;
     
     //double number = sum(1 for item in r if item <= fscatt);
     
-    float recoil_momentum = (h/lp.wavelength)/type.mass;// * number
+    double recoil_momentum = (h/lp_.wavelength)/ionType_.mass;// * number
     Vector3D slow(recoil_momentum,0,0);
-	vel -= slow;
-
-    return;
+	vel_ -= slow;
+	//ionType_.ElecState++;
+	return;
 }
 
 /**

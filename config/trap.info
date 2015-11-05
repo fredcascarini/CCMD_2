@@ -58,3 +58,9 @@ iontype {
         charge  	1	
     }
 }
+
+laser {
+	wavelength 130
+	delta 1
+	IdIsat 1
+}

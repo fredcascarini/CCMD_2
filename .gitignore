@@ -48,3 +48,4 @@ Temporary Items
 *.c
 *.pup
 src/include/*/
+*.csv

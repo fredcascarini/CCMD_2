@@ -63,7 +63,7 @@ class Ion {
     const IonType& ionType_;
     Vector3D pos_;
     Vector3D vel_;
-
+ 
     // Store statistics for this ion
     Stats<Vector3D> posStats_;
     Stats<double> velStats_;
@@ -95,11 +95,17 @@ class LaserCooledIon : public TrappedIon {
     void kick(double dt);
     void velocity_scale(double dt);
     void heat(double dt);
+	void Emit();
+	void Absorb();
 
     LaserCooledIon(const LaserCooledIon&) = delete;
     const LaserCooledIon& operator=(const LaserCooledIon&) = delete;
  private:
+	double fscatt();
+	void isoEmit();
     Stochastic_heat heater_;
+	LaserParams lp_;
+	SimParams sp_;
     Vector3D get_friction() const;
 };
 
