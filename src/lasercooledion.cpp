@@ -72,6 +72,14 @@ inline void LaserCooledIon::kick(double dt) {
 }
 
 //added function
+/**
+ * @brief Find the stimulated emission/absorption probability based on the spontaneous emission probability and information about the
+ * laser beam
+ *
+ * @param vel	ion velocity
+ * @param lp	A pointer to the laser parameters
+ * @param type	A pointer to the ion parameters 
+ */
 float fscatt(Vector3D vel, const LaserParams& lp, const IonType& type) {
     
     float pi = 3.14159265359;
@@ -80,7 +88,7 @@ float fscatt(Vector3D vel, const LaserParams& lp, const IonType& type) {
     double delta = lp.delta;
 	double Gamma3 = pow(Gamma,3);
 	double Gamma2 = std::pow(Gamma,2);
-	Vector3D k = Vector3D(0,0,(2*pi) / lp.wavelength );
+	Vector3D k(0,0,(2*pi) / lp.wavelength );
     
     double gamma = 0.5 * (Gamma3);
     gamma *= IdIsat;
@@ -92,23 +100,30 @@ float fscatt(Vector3D vel, const LaserParams& lp, const IonType& type) {
 }
 
 // added function
-void isoEmit(Vector3D vel, const LaserParams& lp){
+/**
+ * @brief Increase the velocity by a vector orientated randomly over a sphere
+ *
+ * @param vel	ion velocity
+ * @param lp	A pointer to the laser parameters
+ * @param type	A pointer to the ion parameters 
+ */
+void isoEmit(Vector3D vel, const LaserParams& lp, const IonType& type){
     
     float h = 6.62607*std::pow(10,-34);
     float pi = 3.14159265359;
     
-    float rnumu = 1; //random.random();
-    float rnumv = 1; //random.random();
+    float rnumu = 0; //random.random();
+    float rnumv = 0; //random.random();
     float theta = 2 * pi * rnumu;
     float phi = acos((2 * rnumv) -1);
     float x = cos(theta) * sin(phi);
     float y = sin(theta) * sin(phi);
     float z = cos(phi);
-    Vector3D increase = Vector3D(x * (h/lp.wavelength), y * (h/lp.wavelength), z * (h/lp.wavelength));
-    vel += increase;
+    Vector3D increase(x * (h/lp.wavelength), y * (h/lp.wavelength), z * (h/lp.wavelength));
+    increase /= type.mass;
+	vel += increase
     
     return;
-
 }
 
 //added function
@@ -122,7 +137,7 @@ void Emit(Vector3D vel, const IonType& type, const LaserParams& lp) {
     //number = sum(1 for item in r if item <= fscatt);
     
     //for i in range(number){
-    isoEmit(vel, lp);
+    isoEmit(vel, lp, type);
     return;
 }	
 
@@ -136,12 +151,11 @@ void Absorb(Vector3D vel, const IonType& type, const LaserParams& lp){
     
     //double number = sum(1 for item in r if item <= fscatt);
     
-    float recoil_momentum = (h/lp.wavelength);// * number
-    Vector3D slow = Vector3D(recoil_momentum,0,0);
+    float recoil_momentum = (h/lp.wavelength)/type.mass;// * number
+    Vector3D slow(recoil_momentum,0,0);
 	vel -= slow;
 
     return;
-	
 }
 
 /**

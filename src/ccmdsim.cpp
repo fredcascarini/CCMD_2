@@ -359,7 +359,7 @@ CloudParams::CloudParams(const std::string& file_name) {
         ionType.beta = ionTypeTree.get<double>("beta", 0.0);
         ionType.recoil = ionTypeTree.get<double>("recoil", 0.0);
         ionType.direction = ionTypeTree.get<double>("direction", 0.5);
-		ionType.A21 = ionTypeTree.get<float>("SpontaneousEmission",1);
+		ionType.A21 = ionTypeTree.get<float>("A21",1); //new
         if (ionType.direction < 0.0) {
             std::stringstream ss;
             ss << "Warning: direction=" << ionType.direction;
@@ -593,8 +593,8 @@ LaserParams::LaserParams(const std::string& file_name) {
 	
     try {
         wavelength= pt.get<float>("laser.wavelength");
-        delta = pt.get<float>("integrator.respasteps");
-        IdIsat   = pt.get<float>("integrator.coolperiods");
+        delta = pt.get<float>("laser.delta");
+        IdIsat   = pt.get<float>("laser.IdIsat");
     } catch(const boost::property_tree::ptree_error &e) {
         log.error("Error reading Laser params.");
         log.error(e.what());
