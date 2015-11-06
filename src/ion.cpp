@@ -55,9 +55,7 @@ void Ion::drift(double dt) {
  *  @param dt   Time step.
  *  @param f    Force vector.
  */
-inline void Ion::kick(const double dt, const Vector3D& f) {
-    vel_ += f/ionType_.mass;
-}
+inline void Ion::kick(const double dt, const Vector3D& f) {vel_ += f/ionType_.mass;}
 
 /**
  *  @brief Add the kinetic energy of this ion to a histogram.

@@ -1,6 +1,8 @@
 #include "include/meanenergylistener.h"
 #include "include/logger.h"
 
+#include <math.h>
+
 #include <list>
 
 /**
@@ -25,9 +27,13 @@ void MeanEnergyListener::update(const int i) {
     if (i%write_every_==0) {
         std::list<double> rowdata;
         rowdata.push_back(energy_row_++);
-        rowdata.push_back(mean_energy_.average() * trap_params_.energy_scale);
-        rowdata.push_back(mean_energy_.variance() * trap_params_.energy_scale);
-        writer_.writeRow(stats_file_, rowdata);
+        if (std::isnan(mean_energy_.average())) {log_.debug("Average is NaN");}
+        else if (std::isnan(mean_energy_.variance())) {log_.debug("Variance is NaN");}
+        else {
+            rowdata.push_back(mean_energy_.average() * trap_params_.energy_scale);
+            rowdata.push_back(mean_energy_.variance() * trap_params_.energy_scale);
+            writer_.writeRow(stats_file_, rowdata);
+        }
         mean_energy_.reset();
     }
 }
