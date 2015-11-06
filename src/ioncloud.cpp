@@ -40,10 +40,10 @@ struct position_ions {
     }
 };
 
-struct initialise_ES {
+/* struct initialise_ES {
     ion->set_ElecState(0)
     return ion
-}
+} */
 
 /**
  *  @class IonCloud
@@ -122,7 +122,7 @@ IonCloud::IonCloud(const IonTrap_ptr ion_trap, const CloudParams& cp,
                    lattice.begin(), ionVec_.begin(),
                    position_ions() );
                    
-    initialise_ES()
+    //initialise_ES()
 
     // move cloud centre to the origin
     Vector3D to_origin = -get_cloud_centre();
