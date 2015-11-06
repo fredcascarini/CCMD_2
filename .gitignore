@@ -50,4 +50,6 @@ Temporary Items
 src/include/*/
 *.csv
 *.exe
-bin/*
+build/*
+config*/*
+*.exe

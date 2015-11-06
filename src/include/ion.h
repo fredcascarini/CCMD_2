@@ -23,7 +23,7 @@ template <class T> class Stats;
 
 class Ion {
  public:
-    explicit Ion(const IonType& type);
+    explicit Ion(const IonType& type, const LaserParams& lp);
     virtual ~Ion() {}
     // Shift ion position.
     void move(const Vector3D &move_va) { pos_ += move_va; }
@@ -61,7 +61,7 @@ class Ion {
 
  protected:
     const IonType& ionType_;
-	const LaserParams lp_;
+    const LaserParams& lp_;
     Vector3D pos_;
     Vector3D vel_;
     int ElecState;		   ///< Electronic energy level, 0 == Ground State, 1 == Excited State, (2 == Dark State)
@@ -74,7 +74,7 @@ class Ion {
 
 class TrappedIon : public Ion {
  public:
-    TrappedIon(const IonTrap_ptr trap, const IonType& type);
+    TrappedIon(const IonTrap_ptr trap, const IonType& type, const LaserParams& lp);
     ~TrappedIon() {}
 
     virtual void kick(double dt);
@@ -90,7 +90,7 @@ class TrappedIon : public Ion {
 
 class LaserCooledIon : public TrappedIon {
  public:
-    LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type, const SimParams& sp);
+    LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type, const SimParams& sp, const LaserParams& lp);
     ~LaserCooledIon() {}
 
     void kick(double dt);

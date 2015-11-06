@@ -149,7 +149,7 @@ int main(int argc, char * const argv[]) {
 
         // Construct ion cloud
         IonCloud_ptr cloud = std::make_shared<IonCloud>
-            (trap, cloud_params, sim_params, trap_params);
+            (trap, cloud_params, sim_params, trap_params, laser_params);
 
         // Construct integrator
         //RespaIntegrator integrator(trap, cloud, integration_params, sim_params);

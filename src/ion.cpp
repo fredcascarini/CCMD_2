@@ -35,8 +35,8 @@
  *  @see TrappedIon, LaserCooledIon
  */
 
-Ion::Ion(const IonType& type)
-: ionType_(type) {
+Ion::Ion(const IonType& type, const LaserParams& lp): 
+    ionType_(type), lp_(lp) {
 }
 
 /**

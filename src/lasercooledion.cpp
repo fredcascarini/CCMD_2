@@ -35,8 +35,8 @@
  *  @param ion_trap A pointer to the ion trap.
  *  @param type     A pointer to ion parameters.
  */
-LaserCooledIon::LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type, const SimParams& sp): 
-	TrappedIon(ion_trap, type), heater_(sp.random_seed) {
+LaserCooledIon::LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type, const SimParams& sp, const LaserParams& lp): 
+	TrappedIon(ion_trap, type, lp), heater_(sp.random_seed) {
     heater_.set_kick_size(sqrt(ionType_.recoil));
 }
 
@@ -66,6 +66,7 @@ inline void LaserCooledIon::kick(double dt) {
 	Vector3D f(0,0,0);
     if (ElecState == 1) f = Emit();
 	else if (ElecState == 0) f = Absorb();
+    else assert(false);
 	this->Ion::kick(dt, f);
     return;
 }

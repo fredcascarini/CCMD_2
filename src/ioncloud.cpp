@@ -89,8 +89,8 @@ struct position_ions {
  *
  */
 IonCloud::IonCloud(const IonTrap_ptr ion_trap, const CloudParams& cp,
-        const SimParams& sp, const TrapParams& tp)
-: cloudParams_(cp), simParams_(sp), trapParams_(tp) {
+        const SimParams& sp, const TrapParams& tp, const LaserParams& lp)
+: cloudParams_(cp), simParams_(sp), trapParams_(tp), lp_(lp) {
     // loop over ion types to initialise ion cloud
     for (auto& it : cloudParams_.ion_type_list) {
         // loop over ions number for type, construct ions using *trap to ensure
@@ -99,10 +99,10 @@ IonCloud::IonCloud(const IonTrap_ptr ion_trap, const CloudParams& cp,
             if (it.is_laser_cooled) {
                 ionVec_.push_back(
                         std::make_shared<LaserCooledIon>(
-                            ion_trap, it, simParams_));
+                            ion_trap, it, simParams_, lp_));
             } else {
                 ionVec_.push_back(
-                        std::make_shared<TrappedIon>(ion_trap, it));
+                        std::make_shared<TrappedIon>(ion_trap, it, lp_));
             }
         }
     }
