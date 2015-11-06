@@ -95,9 +95,8 @@ class IonType {
     bool is_laser_cooled;
     bool is_heated;
 
-    float A21;			   ///< Einstein A21 Coefficient
-	int ElecState;		   ///< Electronic energy level, 0 == Ground State, 1 == Excited State, (2 == Dark State)
-
+    float A21;			   ///< Einstein A21 coefficient
+    
     // IonType(IonType&&) = default;
     // IonType(const IonType& ) = delete;
     // const IonType& operator=(const IntegrationParams&) = delete;

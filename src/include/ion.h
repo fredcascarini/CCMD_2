@@ -64,6 +64,7 @@ class Ion {
 	const LaserParams lp_;
     Vector3D pos_;
     Vector3D vel_;
+    int ElecState;		   ///< Electronic energy level, 0 == Ground State, 1 == Excited State, (2 == Dark State)
  
     // Store statistics for this ion
     Stats<Vector3D> posStats_;
