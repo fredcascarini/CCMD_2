@@ -61,6 +61,7 @@ class Ion {
 
  protected:
     const IonType& ionType_;
+	const LaserParams lp_;
     Vector3D pos_;
     Vector3D vel_;
  
@@ -88,24 +89,21 @@ class TrappedIon : public Ion {
 
 class LaserCooledIon : public TrappedIon {
  public:
-    LaserCooledIon(const IonTrap_ptr ion_trap,
-            const IonType& type, const SimParams& sp);
+    LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type, const SimParams& sp);
     ~LaserCooledIon() {}
 
     void kick(double dt);
     void velocity_scale(double dt);
     void heat(double dt);
-	void Emit();
-	void Absorb();
+	Vector3D Emit();
+	Vector3D Absorb();
 
     LaserCooledIon(const LaserCooledIon&) = delete;
     const LaserCooledIon& operator=(const LaserCooledIon&) = delete;
  private:
 	double fscatt();
-	void isoEmit();
+	Vector3D isoEmit();
     Stochastic_heat heater_;
-	LaserParams lp_;
-	SimParams sp_;
     Vector3D get_friction() const;
 };
 

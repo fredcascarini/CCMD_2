@@ -28,7 +28,6 @@
 
 #include "include/vector3D.h"
 
-using namespace std;
 
 /**
  *  Construct a new laser cooled ion. The trap  are passed up to the
@@ -36,9 +35,8 @@ using namespace std;
  *  @param ion_trap A pointer to the ion trap.
  *  @param type     A pointer to ion parameters.
  */
-LaserCooledIon::LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type,
-        const SimParams& sp)
-    : TrappedIon(ion_trap, type), heater_(sp.random_seed) {
+LaserCooledIon::LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type, const SimParams& sp): 
+	TrappedIon(ion_trap, type), heater_(sp.random_seed) {
     heater_.set_kick_size(sqrt(ionType_.recoil));
 }
 
@@ -65,9 +63,10 @@ inline void LaserCooledIon::kick(double dt) {
     // 1D Laser cooling friction force
     // This force must be evaluated last to allow its effect to be
     // undone by the call to velocity_scale
-    if (ionType_.ElecState == 1) Emit();
-	else if (ionType_.ElecState == 0) Absorb();
-
+	Vector3D f(0,0,0);
+    if (ionType_.ElecState == 1) f = Emit();
+	else if (ionType_.ElecState == 0) f = Absorb();
+	this->Ion::kick(dt, f);
     return;
 }
 
@@ -105,33 +104,31 @@ double LaserCooledIon::fscatt() {
  * @param lp	A pointer to the laser parameters
  * @param type	A pointer to the ion parameters 
  */
-void LaserCooledIon::isoEmit(){
+Vector3D LaserCooledIon::isoEmit(){
     
 	double h = 6.62607*std::pow(10,-34);
 	
     Vector3D SphVec = heater_.random_sphere_vector();
 	SphVec *= h/lp_.wavelength;
-    SphVec /= ionType_.mass;
-	vel_ += SphVec;
     
-    return;
+    return SphVec;
 }
 
 //added function
-void LaserCooledIon::Emit() {
+Vector3D LaserCooledIon::Emit() {
     
     double dt = 1.0*std::pow(10,-9);
     double fs = fscatt(); //Probability of stimulated emission s^-1
     fs += 1.4*std::pow(10,-8); //Probability of spontaneous emission s^-1 from NIST
     fs *= dt;
     
-    isoEmit();
+    Vector3D SphVecRet = isoEmit();
 	//ionType_.ElecState-- ;
-    return;
+    return SphVecRet;
 }	
 
 // added function  
-void LaserCooledIon::Absorb(){
+Vector3D LaserCooledIon::Absorb(){
 
     double h = 6.62607*std::pow(10,-34);
     double dt = 1.0*std::pow(10,-9);
@@ -142,9 +139,8 @@ void LaserCooledIon::Absorb(){
     
     double recoil_momentum = (h/lp_.wavelength)/ionType_.mass;// * number
     Vector3D slow(recoil_momentum,0,0);
-	vel_ -= slow;
 	//ionType_.ElecState++;
-	return;
+	return slow;
 }
 
 /**

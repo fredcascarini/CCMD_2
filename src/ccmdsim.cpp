@@ -604,6 +604,6 @@ LaserParams::LaserParams(const std::string& file_name) {
 	log.info("Laser parameters:");
     log.info("\tWavelength: " + std::to_string(wavelength));
     log.info("\tdelta: " + std::to_string(delta));
-    log.info("\tI/Isat: " + std::to_string(IdIsat);
+    log.info("\tI/Isat: " + std::to_string(IdIsat));
 
 }
