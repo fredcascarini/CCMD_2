@@ -56,8 +56,7 @@ void Ion::drift(double dt) {
  *  @param f    Force vector.
  */
 inline void Ion::kick(const double dt, const Vector3D& f) {
-    double time_over_mass = dt/ionType_.mass;
-    vel_ += f*time_over_mass;
+    vel_ += f/ionType_.mass;
 }
 
 /**

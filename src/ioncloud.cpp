@@ -36,14 +36,10 @@ struct compare_ions_by_mass {
 struct position_ions {
     Ion_ptr& operator() (Ion_ptr& ion, const Vector3D& r) const {
         ion->set_position(r);
+        ion->set_ElecState(0);
         return ion;
     }
 };
-
-/* struct initialise_ES {
-    ion->set_ElecState(0)
-    return ion
-} */
 
 /**
  *  @class IonCloud
@@ -121,8 +117,6 @@ IonCloud::IonCloud(const IonTrap_ptr ion_trap, const CloudParams& cp,
     std::transform(ionVec_.begin(), ionVec_.end(),
                    lattice.begin(), ionVec_.begin(),
                    position_ions() );
-                   
-    //initialise_ES()
 
     // move cloud centre to the origin
     Vector3D to_origin = -get_cloud_centre();

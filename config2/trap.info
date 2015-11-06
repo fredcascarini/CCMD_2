@@ -60,7 +60,7 @@ iontype {
 }
 
 laser {
-	wavelength 130
-	delta 1
+	wavelength 0.000000396908
+	delta 0.000000014
 	IdIsat 1
 }

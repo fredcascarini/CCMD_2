@@ -65,7 +65,7 @@ inline void LaserCooledIon::kick(double dt) {
     // undone by the call to velocity_scale
 	Vector3D f(0,0,0);
     if (ElecState == 1) f = Emit();
-	else if (ElecState == 0) f = Absorb();
+	else if (ElecState == 0) f = Absorb()* -1.0;
     else {
         std::string ElecStateStr = std::to_string(ElecState);
         throw std::runtime_error("ElecState != 0 or 1, it is " + ElecStateStr);
