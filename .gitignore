@@ -49,3 +49,5 @@ Temporary Items
 *.pup
 src/include/*/
 *.csv
+*.exe
+bin/*
