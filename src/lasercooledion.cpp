@@ -66,7 +66,10 @@ inline void LaserCooledIon::kick(double dt) {
 	Vector3D f(0,0,0);
     if (ElecState == 1) f = Emit();
 	else if (ElecState == 0) f = Absorb();
-    else assert(false);
+    else {
+        std::string ElecStateStr = std::to_string(ElecState);
+        throw std::runtime_error("ElecState != 0 or 1, it is " + ElecStateStr);
+    }
 	this->Ion::kick(dt, f);
     return;
 }
@@ -124,7 +127,7 @@ Vector3D LaserCooledIon::Emit() {
     fs *= dt;
     
     Vector3D SphVecRet = isoEmit();
-	ElecState-- ;
+	ElecState = 0;
     return SphVecRet;
 }	
 
@@ -140,7 +143,7 @@ Vector3D LaserCooledIon::Absorb(){
     
     double recoil_momentum = (h/lp_.wavelength)/ionType_.mass;// * number
     Vector3D slow(recoil_momentum,0,0);
-	ElecState++;
+	ElecState = 1;
 	return slow;
 }
 

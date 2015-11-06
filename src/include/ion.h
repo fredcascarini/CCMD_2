@@ -37,6 +37,7 @@ class Ion {
     // These should only be called once on initialising the ion;
     void set_position(const Vector3D &r) { pos_ = r; }
     void set_velocity(const Vector3D &v) { vel_ = v; }
+    void set_ElecState(const int &ES)    { ElecState = ES}
 
     // velocity modifying functions
     // Subclasses must provide their own force calculation

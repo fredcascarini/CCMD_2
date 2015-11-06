@@ -40,6 +40,11 @@ struct position_ions {
     }
 };
 
+struct initialise_ES {
+    ion->set_ElecState(0)
+    return ion
+}
+
 /**
  *  @class IonCloud
  *  @brief Class to hold a collection of ions and perform actions on each.
@@ -116,6 +121,8 @@ IonCloud::IonCloud(const IonTrap_ptr ion_trap, const CloudParams& cp,
     std::transform(ionVec_.begin(), ionVec_.end(),
                    lattice.begin(), ionVec_.begin(),
                    position_ions() );
+                   
+    initialise_ES()
 
     // move cloud centre to the origin
     Vector3D to_origin = -get_cloud_centre();
