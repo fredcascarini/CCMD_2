@@ -29,6 +29,7 @@ void MeanEnergyListener::update(const int i) {
         std::list<double> rowdata;
         if (std::to_string(mean_energy_.variance()) == "nan") {testvariance = 1;}
         //std::cout << testvariance << "\n"; 
+        //std::cout << mean_energy_.average() << "\n";
             rowdata.push_back(energy_row_++);
             //log_.info(std::to_string(mean_energy_.variance() * trap_params_.energy_scale));
             rowdata.push_back(mean_energy_.average() * trap_params_.energy_scale);

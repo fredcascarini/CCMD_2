@@ -67,6 +67,14 @@ public:
 		Vector3D spherevector(rndsphx,rndsphy,rndsphz);
 		return spherevector;
 	}
+    
+    bool testfscatt(double fscatt){
+        double rnum = 12.0;
+        while ((rnum > 1.0) | (rnum < 0.0)){
+		rnum = norm_dist(generator);
+        }
+        return (rnum < fscatt);       
+    }
 };
 
 #endif

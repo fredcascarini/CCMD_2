@@ -110,10 +110,10 @@ double LaserCooledIon::fscatt() {
  */
 Vector3D LaserCooledIon::isoEmit(){
     
-	double h = 6.62607*std::pow(10,-34);
+	double h = 6.62607e-34;
 	
     Vector3D SphVec = heater_.random_sphere_vector();
-	SphVec *= h/lp_.wavelength;
+	SphVec *=(h/lp_.wavelength)/ionType_.mass;
     
     return SphVec;
 }
@@ -121,29 +121,32 @@ Vector3D LaserCooledIon::isoEmit(){
 //added function
 Vector3D LaserCooledIon::Emit() {
     
-    double dt = 1.0*std::pow(10,-9);
+    Vector3D SphVecRet(0,0,0);
+    double dt = 1e-9;
     double fs = fscatt(); //Probability of stimulated emission s^-1
     fs += 1.4*std::pow(10,-8); //Probability of spontaneous emission s^-1 from NIST
     fs *= dt;
-    
-    Vector3D SphVecRet = isoEmit();
+    if (heater_.testfscatt(fs)){
+    SphVecRet = isoEmit();
 	ElecState = 0;
+    }
     return SphVecRet;
 }	
 
 // added function  
 Vector3D LaserCooledIon::Absorb(){
-
-    double h = 6.62607*std::pow(10,-34);
-    double dt = 1.0*std::pow(10,-9);
+    
+    Vector3D slow(0,0,0);
+    double h = 6.62607e-34;
+    double dt = 1e-9;
     double fs = fscatt(); //Probability of stimulated absorption s^-1
     fs *= dt;
-    
-    //double number = sum(1 for item in r if item <= fscatt);
-    
-    double recoil_momentum = (h/lp_.wavelength)/ionType_.mass;// * number
-    Vector3D slow(recoil_momentum,0,0);
+
+    if (heater_.testfscatt(fs)){
+    double recoil_momentum = (h/lp_.wavelength)/ionType_.mass;
+    slow = Vector3D(recoil_momentum,0.0,0.0);
 	ElecState = 1;
+    }
 	return slow;
 }
 
