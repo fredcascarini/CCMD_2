@@ -111,7 +111,7 @@ int main(int argc, char * const argv[]) {
 
     log.initialise(Logger::DEBUG, path + "log.txt");
     log.info("CCMD - Coulomb crystal molecular dynamics");
-    log.info("Version 2.1.0");
+    log.info("Version 2.2.0 alpha");
 
     // Parameter file paths
     std::string info_file = path + "trap.info";

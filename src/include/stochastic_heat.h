@@ -10,6 +10,7 @@
 
 #include <random>
 #include <ctime>
+#include <cstdlib>
 
 
 class Stochastic_heat {
@@ -50,9 +51,14 @@ public:
 	Vector3D random_sphere_vector() {
 		
 		double pi = 3.14159265359;
-	
-		double rnumu = norm_dist(generator);
-		double rnumv = norm_dist(generator);
+	    
+        double rnumu = 12.0;
+        double rnumv = 12.0;
+        
+        while ((rnumu > 1.0) | (rnumv > 1.0) | (rnumu < 0.0) | (rnumv < 0.0)){
+		rnumu = norm_dist(generator);
+		rnumv = norm_dist(generator);
+        }
 		double theta = 2 * pi * rnumu;
 		double phi = acos((2 * rnumv) -1);
 		double rndsphx = cos(theta) * sin(phi);

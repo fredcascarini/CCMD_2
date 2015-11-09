@@ -28,8 +28,7 @@ simulation {
     seed        213
 }
 ionnumbers {
-    Ca      900
-    Xe      200
+    Ca      90
 }
 iontype {
     CaF {

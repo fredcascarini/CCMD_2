@@ -24,18 +24,18 @@ MeanEnergyListener::MeanEnergyListener(const IntegrationParams& int_params,
 
 void MeanEnergyListener::update(const int i) {
     mean_energy_.append(ions_->kinetic_energy());
+    int testvariance = 0;
     if (i%write_every_==0) {
         std::list<double> rowdata;
-        rowdata.push_back(energy_row_++);
-        if (std::isnan(mean_energy_.average())) {log_.debug("Average is NaN");}
-        else if (std::isnan(mean_energy_.variance())) {log_.debug("Variance is NaN");}
-        else {
+        if (std::to_string(mean_energy_.variance()) == "nan") {testvariance = 1;}
+        //std::cout << testvariance << "\n"; 
+            rowdata.push_back(energy_row_++);
+            //log_.info(std::to_string(mean_energy_.variance() * trap_params_.energy_scale));
             rowdata.push_back(mean_energy_.average() * trap_params_.energy_scale);
             rowdata.push_back(mean_energy_.variance() * trap_params_.energy_scale);
             writer_.writeRow(stats_file_, rowdata);
-        }
-        mean_energy_.reset();
     }
+        mean_energy_.reset();
 }
 
 void MeanEnergyListener::finished() {
