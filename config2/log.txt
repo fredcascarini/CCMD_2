@@ -1,39 +1,46 @@
-Mon Nov 09 16:27:33 2015 [Info] CCMD - Coulomb crystal molecular dynamics
-Mon Nov 09 16:27:33 2015 [Info] Version 2.2.0 alpha
-Mon Nov 09 16:27:33 2015 [Info] Loading input file ../config2/trap.info
-Mon Nov 09 16:27:33 2015 [Debug] Loading trap parameters.
-Mon Nov 09 16:27:33 2015 [Info] Trap parameters:
-Mon Nov 09 16:27:33 2015 [Info] 	Vrf: 150.750000
-Mon Nov 09 16:27:33 2015 [Info] 	End cap: 1.500000
-Mon Nov 09 16:27:33 2015 [Info] 	eta: 0.244000
-Mon Nov 09 16:27:33 2015 [Info] 	r0: 0.003500
-Mon Nov 09 16:27:33 2015 [Info] 	z0: 0.002750
-Mon Nov 09 16:27:33 2015 [Info] 	freq: 3850000.000000
-Mon Nov 09 16:27:33 2015 [Debug] Energy scale factor 2.3471e-023 J per unit
-Mon Nov 09 16:27:33 2015 [Info] Making a cosine trap.
-Mon Nov 09 16:27:33 2015 [Info]  ions:
-Mon Nov 09 16:27:33 2015 [Info] 	Number: 90
-Mon Nov 09 16:27:33 2015 [Info] 	Mass: 40.000000
-Mon Nov 09 16:27:33 2015 [Info] 	Charge: 1
-Mon Nov 09 16:27:33 2015 [Info] 	Laser Cooled.
-Mon Nov 09 16:27:33 2015 [Info] 	beta: 0.800000
-Mon Nov 09 16:27:33 2015 [Info] 	recoil: 0.000010
-Mon Nov 09 16:27:33 2015 [Info] 	direction: 0.500000
-Mon Nov 09 16:27:33 2015 [Info] Integrator parameters:
-Mon Nov 09 16:27:33 2015 [Info] 	Time step: 0.157080
-Mon Nov 09 16:27:33 2015 [Info] 	RESPA steps: 50
-Mon Nov 09 16:27:33 2015 [Info] 	Will take 4000 steps to allow ions to equilibrate,
-Mon Nov 09 16:27:33 2015 [Info] 	 then 10000 steps while collecting data
-Mon Nov 09 16:27:33 2015 [Info] Coulomb Force using 0 threads.
-Mon Nov 09 16:27:33 2015 [Info] Random seed 213
-Mon Nov 09 16:27:33 2015 [Info] Laser parameters:
-Mon Nov 09 16:27:33 2015 [Info] 	Wavelength: 0.000000
-Mon Nov 09 16:27:33 2015 [Info] 	delta: 0.000000
-Mon Nov 09 16:27:33 2015 [Info] 	I/Isat: 1.000000
-Mon Nov 09 16:27:33 2015 [Info] Verlet integration.
-Mon Nov 09 16:27:33 2015 [Info] Running cool down.
-Mon Nov 09 16:27:33 2015 [Debug] Started MeanEnergyListener
-Mon Nov 09 16:27:34 2015 [Debug] Finished MeanEnergyListener.
-Mon Nov 09 16:27:34 2015 [Info] Acquiring histogram data
-Mon Nov 09 16:27:34 2015 [Debug] Started ImageHistogramListener
-Mon Nov 09 16:27:34 2015 [Debug] Started IonStatsListener
+Mon Nov 09 17:28:16 2015 [Info] CCMD - Coulomb crystal molecular dynamics
+Mon Nov 09 17:28:16 2015 [Info] Version 2.2.0 alpha
+Mon Nov 09 17:28:16 2015 [Info] Loading input file ../config2/trap.info
+Mon Nov 09 17:28:16 2015 [Debug] Loading trap parameters.
+Mon Nov 09 17:28:16 2015 [Info] Trap parameters:
+Mon Nov 09 17:28:16 2015 [Info] 	Vrf: 150.750000
+Mon Nov 09 17:28:16 2015 [Info] 	End cap: 1.500000
+Mon Nov 09 17:28:16 2015 [Info] 	eta: 0.244000
+Mon Nov 09 17:28:16 2015 [Info] 	r0: 0.003500
+Mon Nov 09 17:28:16 2015 [Info] 	z0: 0.002750
+Mon Nov 09 17:28:16 2015 [Info] 	freq: 3850000.000000
+Mon Nov 09 17:28:16 2015 [Debug] Energy scale factor 2.3471e-023 J per unit
+Mon Nov 09 17:28:16 2015 [Info] Making a cosine trap.
+Mon Nov 09 17:28:16 2015 [Info]  ions:
+Mon Nov 09 17:28:16 2015 [Info] 	Number: 90
+Mon Nov 09 17:28:16 2015 [Info] 	Mass: 40.000000
+Mon Nov 09 17:28:16 2015 [Info] 	Charge: 1
+Mon Nov 09 17:28:16 2015 [Info] 	Laser Cooled.
+Mon Nov 09 17:28:16 2015 [Info] 	beta: 0.800000
+Mon Nov 09 17:28:16 2015 [Info] 	recoil: 0.000010
+Mon Nov 09 17:28:16 2015 [Info] 	direction: 0.500000
+Mon Nov 09 17:28:16 2015 [Info] Integrator parameters:
+Mon Nov 09 17:28:16 2015 [Info] 	Time step: 0.157080
+Mon Nov 09 17:28:16 2015 [Info] 	RESPA steps: 50
+Mon Nov 09 17:28:16 2015 [Info] 	Will take 4000 steps to allow ions to equilibrate,
+Mon Nov 09 17:28:16 2015 [Info] 	 then 10000 steps while collecting data
+Mon Nov 09 17:28:16 2015 [Info] Coulomb Force using 0 threads.
+Mon Nov 09 17:28:16 2015 [Info] Random seed 213
+Mon Nov 09 17:28:16 2015 [Info] Laser parameters:
+Mon Nov 09 17:28:16 2015 [Info] 	Wavelength: 0.000000
+Mon Nov 09 17:28:16 2015 [Info] 	delta: 0.000000
+Mon Nov 09 17:28:16 2015 [Info] 	I/Isat: 1.000000
+Mon Nov 09 17:28:16 2015 [Info] Verlet integration.
+Mon Nov 09 17:28:16 2015 [Info] Running cool down.
+Mon Nov 09 17:28:16 2015 [Debug] Started MeanEnergyListener
+Mon Nov 09 17:28:16 2015 [Debug] Finished MeanEnergyListener.
+Mon Nov 09 17:28:16 2015 [Info] Acquiring histogram data
+Mon Nov 09 17:28:16 2015 [Debug] Started ImageHistogramListener
+Mon Nov 09 17:28:16 2015 [Debug] Started IonStatsListener
+Mon Nov 09 17:28:19 2015 [Info] Total kinetic energy = 8.5979e-021 J
+Mon Nov 09 17:28:19 2015 [Info] Total energy = 1.9148e-016 J
+Mon Nov 09 17:28:19 2015 [Info] Wall time = 3.57 s
+Mon Nov 09 17:28:19 2015 [Info] CPU time  = 3.00 s
+Mon Nov 09 17:28:19 2015 [Debug] Trying to deconstruct ImageHistogramListener
+Mon Nov 09 17:28:19 2015 [Debug] Trying to finish ImageHistogramListener
+Mon Nov 09 17:28:19 2015 [Info] Generating image: Calcium

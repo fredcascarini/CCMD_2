@@ -64,8 +64,8 @@ inline void LaserCooledIon::kick(double dt) {
     // This force must be evaluated last to allow its effect to be
     // undone by the call to velocity_scale
 	Vector3D f(0,0,0);
-    if (ElecState == 1) f = Emit();
-	else if (ElecState == 0) f = Absorb()* -1.0;
+    if (ElecState == 1) {f = Emit();}
+	else if (ElecState == 0) {f = Absorb()* -1.0;}
     else {
         std::string ElecStateStr = std::to_string(ElecState);
         throw std::runtime_error("ElecState != 0 or 1, it is " + ElecStateStr);
@@ -85,16 +85,16 @@ inline void LaserCooledIon::kick(double dt) {
 double LaserCooledIon::fscatt() {
     
     double pi = 3.14159265359;
-    double Gamma = ionType_.A21;
+    double Gamma = 1.4e8;//ionType_.A21;
     double IdIsat = lp_.IdIsat;
-    double delta = lp_.delta;
+    double delta = Gamma; //lp_.delta;
 	double Gamma3 = pow(Gamma,3);
 	double Gamma2 = std::pow(Gamma,2);
 	Vector3D k(0,0,(2*pi) / lp_.wavelength );
     
     double gamma = 0.5 * (Gamma3);
     gamma *= IdIsat;
-    double x = delta ;//- dot(vel_,k);
+    double x = delta - vel_.dot(vel_,k);
     double x2 = std::pow(x,2);
     gamma /= (Gamma2 + (4 * x2));
     return gamma;
@@ -113,7 +113,7 @@ Vector3D LaserCooledIon::isoEmit(){
 	double h = 6.62607e-34;
 	
     Vector3D SphVec = heater_.random_sphere_vector();
-	SphVec *=(h/lp_.wavelength)/ionType_.mass;
+	SphVec *=(h/lp_.wavelength);
     
     return SphVec;
 }
@@ -124,11 +124,12 @@ Vector3D LaserCooledIon::Emit() {
     Vector3D SphVecRet(0,0,0);
     double dt = 1e-9;
     double fs = fscatt(); //Probability of stimulated emission s^-1
-    fs += 1.4*std::pow(10,-8); //Probability of spontaneous emission s^-1 from NIST
+    fs += 1.4e-8; //Probability of spontaneous emission s^-1 from NIST
     fs *= dt;
+    
     if (heater_.testfscatt(fs)){
-    SphVecRet = isoEmit();
-	ElecState = 0;
+        SphVecRet = isoEmit();
+	   ElecState = 0;
     }
     return SphVecRet;
 }	
@@ -143,9 +144,9 @@ Vector3D LaserCooledIon::Absorb(){
     fs *= dt;
 
     if (heater_.testfscatt(fs)){
-    double recoil_momentum = (h/lp_.wavelength)/ionType_.mass;
-    slow = Vector3D(recoil_momentum,0.0,0.0);
-	ElecState = 1;
+        double recoil_momentum = (h/lp_.wavelength);
+        slow = Vector3D(recoil_momentum,0.0,0.0);
+	   ElecState = 1;
     }
 	return slow;
 }
