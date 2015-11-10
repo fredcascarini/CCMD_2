@@ -22,7 +22,7 @@ BOOST_INCLUDE = /u/tps/crennick/boost_1_55_0
 
 
 intel: INCLUDE_DIRS := $(BOOST_INCLUDE) ./include
-gnu: INCLUDE_DIRS :=  ./include /opt/local/include C:\MinGW\boost_1_58_0
+gnu: INCLUDE_DIRS :=  ./include /opt/local/include C:\MinGW\boost_1_58_0 C:\MinGW\lpng1618
 
 intel: LIBRARY_DIR := -L/u/tps/crennick/boost_1_55_0/stage/lib/
 LIBRARIES := -lpng -lz

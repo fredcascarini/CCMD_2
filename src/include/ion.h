@@ -37,7 +37,7 @@ class Ion {
     // These should only be called once on initialising the ion;
     void set_position(const Vector3D &r) { pos_ = r; }
     void set_velocity(const Vector3D &v) { vel_ = v; }
-    void set_ElecState(const int &ES)     { ElecState = ES;}
+    void set_ElecState(const int &ES)    { ElecState = ES;}
 
     // velocity modifying functions
     // Subclasses must provide their own force calculation
@@ -47,15 +47,15 @@ class Ion {
     virtual void heat(double dt) {}
 
     // accessor functions
-    const IonType& get_type() const {return ionType_; }
-    std::string name() const {return ionType_.name;}
-    std::string formula() const {return ionType_.formula;}
-    const Vector3D& get_pos() const {return pos_;}
-    const Vector3D& get_vel() const {return vel_;}
-    double get_mass() const {return ionType_.mass;}
-    double get_charge() const {return ionType_.charge;}
-    const Stats<Vector3D> get_posStats() const {return posStats_;}
-    const Stats<double> get_velStats() const {return velStats_;}
+    const IonType& get_type()               const {return ionType_; }
+    std::string name()                      const {return ionType_.name;}
+    std::string formula()                   const {return ionType_.formula;}
+    const Vector3D& get_pos()               const {return pos_;}
+    const Vector3D& get_vel()               const {return vel_;}
+    double get_mass()                       const {return ionType_.mass;}
+    double get_charge()                     const {return ionType_.charge;}
+    const Stats<Vector3D> get_posStats()    const {return posStats_;}
+    const Stats<double> get_velStats()      const {return velStats_;}
 
     Ion(const Ion&) = delete;
     const Ion& operator=(const Ion&) = delete;
