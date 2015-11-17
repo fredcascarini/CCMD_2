@@ -40,5 +40,6 @@ void MeanEnergyListener::update(const int i) {
 }
 
 void MeanEnergyListener::finished() {
+    std::cout<<"\n";
     log_.debug("Finished MeanEnergyListener.");
 }

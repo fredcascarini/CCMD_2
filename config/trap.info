@@ -10,7 +10,7 @@ trap {
     }
 }
 integrator {
-    stepsPerPeriod 20
+    stepsPerPeriod 2000
     respasteps  50       ; Respa inner loop steps
     coolperiods 20000
     histperiods   5000

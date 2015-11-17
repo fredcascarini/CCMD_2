@@ -12,8 +12,8 @@ trap {
 integrator {
     stepsPerPeriod 20
     respasteps  500       ; Respa inner loop steps
-    coolperiods 200000
-    histperiods   5000
+    coolperiods 5
+    histperiods  500
 }
 image {
     makeimage   true
@@ -24,7 +24,7 @@ image {
     nx          480     ; Number of pixels in x axis
 }
 simulation {
-    threads     0
+    threads     2
     seed        213
 }
 ionnumbers {
@@ -41,8 +41,6 @@ iontype {
         mass        40.0
         charge      1
         lasercooled true
-        beta        0.8
-        heated      true
         recoil      0.00001
         direction   0.5
     }

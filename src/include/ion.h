@@ -97,8 +97,8 @@ class LaserCooledIon : public TrappedIon {
     void kick(double dt);
     void velocity_scale(double dt);
     void heat(double dt);
-	Vector3D Emit();
-	Vector3D Absorb();
+	Vector3D Emit(double dt);
+	Vector3D Absorb(double dt);
 
     LaserCooledIon(const LaserCooledIon&) = delete;
     const LaserCooledIon& operator=(const LaserCooledIon&) = delete;

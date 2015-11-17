@@ -355,8 +355,6 @@ CloudParams::CloudParams(const std::string& file_name) {
         ionType.mass = ionTypeTree.get<double>("mass");
         ionType.charge = ionTypeTree.get<int>("charge");
         ionType.is_laser_cooled = ionTypeTree.get<bool>("lasercooled", false);
-        ionType.is_heated = ionTypeTree.get<bool>("heating", false);
-        ionType.beta = ionTypeTree.get<double>("beta", 0.0);
         ionType.recoil = ionTypeTree.get<double>("recoil", 0.0);
         ionType.direction = ionTypeTree.get<double>("direction", 0.5);
 		ionType.A21 = ionTypeTree.get<float>("A21",1); //new

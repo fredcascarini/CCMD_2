@@ -64,13 +64,15 @@ inline void LaserCooledIon::kick(double dt) {
     // This force must be evaluated last to allow its effect to be
     // undone by the call to velocity_scale
 	Vector3D f(0,0,0);
-    if (ElecState == 1) {f = Emit();}
-	else if (ElecState == 0) {f = Absorb()* -1.0;}
-    else {
-        std::string ElecStateStr = std::to_string(ElecState);
-        throw std::runtime_error("ElecState != 0 or 1, it is " + ElecStateStr);
+    double time_per_loop = 1e-8;
+    for(double i = 0.0; i < dt; i += time_per_loop){
+       if (ElecState == 1) {f = Emit(dt);}
+	   else if (ElecState == 0) {f = Absorb(dt)* -1.0;}
+       else {std::string ElecStateStr = std::to_string(ElecState); throw std::runtime_error("ElecState != 0 or 1, it is " + ElecStateStr);}
+       f /= dt;
+	   this->Ion::kick(dt, f);
     }
-	this->Ion::kick(dt, f);
+    std::cout<<"loop ended\t";
     return;
 }
 
@@ -85,16 +87,16 @@ inline void LaserCooledIon::kick(double dt) {
 double LaserCooledIon::fscatt() {
     
     double pi = 3.14159265359;
-    double Gamma = 1.4e8;//ionType_.A21;
+    double Gamma = 1.4e5;//ionType_.A21;
     double IdIsat = lp_.IdIsat;
     double delta = Gamma; //lp_.delta;
-	double Gamma3 = pow(Gamma,3);
+	double Gamma3 = std::pow(Gamma,3);
 	double Gamma2 = std::pow(Gamma,2);
 	Vector3D k(0,0,(2*pi) / lp_.wavelength );
     
     double gamma = 0.5 * (Gamma3);
     gamma *= IdIsat;
-    double x = delta - vel_.dot(vel_,k);
+    double x = delta + vel_.dot(vel_,k);
     double x2 = std::pow(x,2);
     gamma /= (Gamma2 + (4 * x2));
     return gamma;
@@ -119,35 +121,39 @@ Vector3D LaserCooledIon::isoEmit(){
 }
 
 //added function
-Vector3D LaserCooledIon::Emit() {
+Vector3D LaserCooledIon::Emit(double dt) {
     
-    Vector3D SphVecRet(0,0,0);
-    double dt = 1e-9;
+    Vector3D SphVecRet(0.0,0.0,0.0);
     double fs = fscatt(); //Probability of stimulated emission s^-1
     fs += 1.4e-8; //Probability of spontaneous emission s^-1 from NIST
     fs *= dt;
-    
-    if (heater_.testfscatt(fs)){
+    bool y = heater_.testfscatt(fs);
+    if (y){
         SphVecRet = isoEmit();
 	   ElecState = 0;
     }
+    //std::cout<<fs<<"\t";
+    //if (SphVecRet != Vector3D(0.0,0.0,0.0)){std::cout<<"Emmitted\t";}
+    //if (SphVecRet == Vector3D(0.0,0.0,0.0)){std::cout<<"        \t";}
     return SphVecRet;
 }	
 
 // added function  
-Vector3D LaserCooledIon::Absorb(){
+Vector3D LaserCooledIon::Absorb(double dt){
     
-    Vector3D slow(0,0,0);
+    Vector3D slow(0.0,0.0,0.0);
     double h = 6.62607e-34;
-    double dt = 1e-9;
     double fs = fscatt(); //Probability of stimulated absorption s^-1
     fs *= dt;
 
     if (heater_.testfscatt(fs)){
         double recoil_momentum = (h/lp_.wavelength);
-        slow = Vector3D(recoil_momentum,0.0,0.0);
+        slow = Vector3D(0.0,0.0,recoil_momentum);
 	   ElecState = 1;
     }
+    //std::cout<<fs<<"\t";
+    //if (slow != Vector3D(0.0,0.0,0.0)){std::cout<<"Slowed  \t";}
+    //if (slow == Vector3D(0.0,0.0,0.0)){std::cout<<"        \t";}
 	return slow;
 }
 

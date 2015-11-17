@@ -36,7 +36,6 @@ TrappedIon::TrappedIon(const IonTrap_ptr trap, const IonType& type, const LaserP
 inline void TrappedIon::kick(double dt) {
     Vector3D f = trap_->force_now(pos_);
     f *= ionType_.charge;
-
     this->Ion::kick(dt, f);
 }
 
