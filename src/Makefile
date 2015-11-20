@@ -22,9 +22,10 @@ BOOST_INCLUDE = /u/tps/crennick/boost_1_55_0
 
 
 intel: INCLUDE_DIRS := $(BOOST_INCLUDE) ./include
-gnu: INCLUDE_DIRS :=  ./include /opt/local/include C:\MinGW\boost_1_58_0 C:\MinGW\lpng1618
+gnu: INCLUDE_DIRS :=  ./include /opt/local/include C:\MinGW\boost_1_58_0 C:\MinGW\lib\gcc\mingw32\4.8.1\include C:\mingw\include\libpng
 
-intel: LIBRARY_DIR := -L/u/tps/crennick/boost_1_55_0/stage/lib/
+intel: LIBRARY_DIR := -LC:\MinGW\mingw32\lib\gcc\mingw32\4.8.1 C:\mingw\include\libpng
+gnu: LIBRARY_DIR := -LC:\mingw\include\libpng
 LIBRARIES := -lpng -lz
 
 CPPFLAGS += $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))
@@ -32,9 +33,9 @@ CPPFLAGS += $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))
 intel: CPPFLAGS += -O3 -std=c++11
 #gnu: CPPFLAGS += -Ofast -std=c++11 -march=native -ffast-math -flto
 #gnu: LDFLAGS += -Ofast -std=c++11 -march=native -ffast-math -flto
-gnu: CPPFLAGS += -Ofast -std=c++11  -march=native -ffast-math -m64 -funroll-loops
-gnu: LDFLAGS += -Ofast -std=c++11 -march=native -ffast-math -m64 -funroll-loops
-# gnu: CPPFLAGS = -std=c++11 -g
+gnu: CPPFLAGS +=  -Ofast -std=c++11  -march=native -ffast-math -m64 -funroll-loops
+gnu: LDFLAGS +=  -Ofast -std=c++11 -march=native -ffast-math -m64 -funroll-loops
+gnu: CFLAGS += -fopenmp
 # gnu: LDFLAGS = -std=c++11
 
 #LIBRARY_PATH = $(foreach librarydir,$(LIBRARIES),$(librarydir))
@@ -48,10 +49,10 @@ all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJS)
 #	ar rc $@ $^  
-	$(CC) -o $@ $^ $(LIBRARY_DIR) $(LIBRARIES)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBRARY_DIR) $(LIBRARIES)
 
 $(BUILD_DIR)%.o : %.cpp 
-	$(CC) -c $< -o $@ $(CPPFLAGS)
+	$(CC) $(CFLAGS) -c $< -o $@ $(CPPFLAGS)
 
 # $(BUILD_DIR)bodysystemcuda.o: bodysystemcuda.cu bodysystemcuda.cpp include/bodysystemcuda.h
 # 	$(NVCC_PATH)/nvcc -O3 --include-path $(CUTIL_LIB) -c bodysystemcuda.cu -o $(BUILD_DIR)bodysystemcuda.o 

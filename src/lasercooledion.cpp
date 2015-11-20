@@ -72,7 +72,7 @@ inline void LaserCooledIon::kick(double dt) {
        f /= dt;
 	   this->Ion::kick(dt, f);
     }
-    std::cout<<"loop ended\t";
+    //std::cout<<"loop ended\t";
     return;
 }
 
