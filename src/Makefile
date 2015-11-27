@@ -61,5 +61,4 @@ clean:
 	@- $(RM) $(EXECUTABLE)
 	@- $(RM) $(OBJS)
 
-
 distclean: clean

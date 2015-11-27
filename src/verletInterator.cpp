@@ -13,7 +13,7 @@ VerletIntegrator::VerletIntegrator(const IonTrap_ptr it, const IonCloud_ptr ic,
     : Integrator(it, ic, integrationParams, sp) {
         Logger& log = Logger::getInstance();
         log.info("Verlet integration.");
-        n_iter_ = 0;
+        n_iter_ = 0; 
 }
 
 void VerletIntegrator::evolve(double dt) {
@@ -21,24 +21,20 @@ void VerletIntegrator::evolve(double dt) {
 
     std::vector<Vector3D> coulomb_force = coulomb_.get_force();
     int i = 0;
-#pragma omp parallel
-    {
-#pragma omp single
-        {
-            for (auto ion : ions_->get_ions() ) {
-#pragma omp task
-                {
-                    // Calculate velocity at half time-step, uses Coulomb force from
-                    // previous time step.
-                    ion->kick(half_dt, coulomb_force[i++]);
-                    ion->heat(half_dt);   // Heating
-                    ion->kick(half_dt);   // Trap, plus heating if LaserCooled.
+    int j = 0;
+    auto _ions = ions_->get_ions();
+    long length = _ions.size();
+    #pragma omp parallel for
+    for (int j = 0; j < length; j++){
+        auto ion =* (_ions.begin() + j);
+        // Calculate velocity at half time-step, uses Coulomb force from
+        // previous time step.
+        ion->kick(half_dt, coulomb_force[i++]);
+        ion->heat(half_dt);   // Heating
+        ion->kick(half_dt);   // Trap, plus heating if LaserCooled.
 
-                    // Update positions by full time step
-                    ion->drift(dt);
-                }
-            }
-        }
+        // Update positions by full time step
+         ion->drift(dt);
     }
 
     // Calculate new acceleration
