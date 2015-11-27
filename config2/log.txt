@@ -1,39 +1,35 @@
-Thu Nov 26 15:43:34 2015 [Info] CCMD - Coulomb crystal molecular dynamics
-Thu Nov 26 15:43:34 2015 [Info] Version 2.2.0 alpha
-Thu Nov 26 15:43:34 2015 [Info] Loading input file ../config2/trap.info
-Thu Nov 26 15:43:34 2015 [Debug] Loading trap parameters.
-Thu Nov 26 15:43:34 2015 [Info] Trap parameters:
-Thu Nov 26 15:43:34 2015 [Info] 	Vrf: 150.750000
-Thu Nov 26 15:43:34 2015 [Info] 	End cap: 1.500000
-Thu Nov 26 15:43:34 2015 [Info] 	eta: 0.244000
-Thu Nov 26 15:43:34 2015 [Info] 	r0: 0.003500
-Thu Nov 26 15:43:34 2015 [Info] 	z0: 0.002750
-Thu Nov 26 15:43:34 2015 [Info] 	freq: 3850000.000000
-Thu Nov 26 15:43:34 2015 [Debug] Energy scale factor 2.3471e-023 J per unit
-Thu Nov 26 15:43:34 2015 [Info] Making a cosine trap.
-Thu Nov 26 15:43:34 2015 [Info]  ions:
-Thu Nov 26 15:43:34 2015 [Info] 	Number: 90
-Thu Nov 26 15:43:34 2015 [Info] 	Mass: 40.000000
-Thu Nov 26 15:43:34 2015 [Info] 	Charge: 1
-Thu Nov 26 15:43:34 2015 [Info] 	Laser Cooled.
-Thu Nov 26 15:43:34 2015 [Info] 	beta: 0.000000
-Thu Nov 26 15:43:34 2015 [Info] 	recoil: 0.000010
-Thu Nov 26 15:43:34 2015 [Info] 	direction: 0.500000
-Thu Nov 26 15:43:34 2015 [Info] Integrator parameters:
-Thu Nov 26 15:43:34 2015 [Info] 	Time step: 0.157080
-Thu Nov 26 15:43:34 2015 [Info] 	RESPA steps: 500
-Thu Nov 26 15:43:34 2015 [Info] 	Will take 100 steps to allow ions to equilibrate,
-Thu Nov 26 15:43:34 2015 [Info] 	 then 10000 steps while collecting data
-Thu Nov 26 15:43:34 2015 [Info] Coulomb Force using 2 threads.
-Thu Nov 26 15:43:34 2015 [Info] Random seed 213
-Thu Nov 26 15:43:34 2015 [Info] Laser parameters:
-Thu Nov 26 15:43:34 2015 [Info] 	Wavelength: 0.000000
-Thu Nov 26 15:43:34 2015 [Info] 	delta: 0.000000
-Thu Nov 26 15:43:34 2015 [Info] 	I/Isat: 1.000000
-Thu Nov 26 15:43:34 2015 [Info] Verlet integration.
-Thu Nov 26 15:43:34 2015 [Info] Running cool down.
-Thu Nov 26 15:43:34 2015 [Debug] Started MeanEnergyListener
-Thu Nov 26 20:29:26 2015 [Debug] Finished MeanEnergyListener.
-Thu Nov 26 20:29:26 2015 [Info] Acquiring histogram data
-Thu Nov 26 20:29:26 2015 [Debug] Started ImageHistogramListener
-Thu Nov 26 20:29:26 2015 [Debug] Started IonStatsListener
+Fri Nov 27 13:11:20 2015 [Info] CCMD - Coulomb crystal molecular dynamics
+Fri Nov 27 13:11:20 2015 [Info] Version 2.2.0 alpha
+Fri Nov 27 13:11:20 2015 [Info] Loading input file ../config2/trap.info
+Fri Nov 27 13:11:20 2015 [Debug] Loading trap parameters.
+Fri Nov 27 13:11:20 2015 [Info] Trap parameters:
+Fri Nov 27 13:11:20 2015 [Info] 	Vrf: 150.750000
+Fri Nov 27 13:11:20 2015 [Info] 	End cap: 1.500000
+Fri Nov 27 13:11:20 2015 [Info] 	eta: 0.244000
+Fri Nov 27 13:11:20 2015 [Info] 	r0: 0.003500
+Fri Nov 27 13:11:20 2015 [Info] 	z0: 0.002750
+Fri Nov 27 13:11:20 2015 [Info] 	freq: 3850000.000000
+Fri Nov 27 13:11:20 2015 [Debug] Energy scale factor 2.3471e-023 J per unit
+Fri Nov 27 13:11:20 2015 [Info] Making a cosine trap.
+Fri Nov 27 13:11:20 2015 [Info]  ions:
+Fri Nov 27 13:11:20 2015 [Info] 	Number: 90
+Fri Nov 27 13:11:20 2015 [Info] 	Mass: 40.000000
+Fri Nov 27 13:11:20 2015 [Info] 	Charge: 1
+Fri Nov 27 13:11:20 2015 [Info] 	Laser Cooled.
+Fri Nov 27 13:11:20 2015 [Info] 	beta: 0.000000
+Fri Nov 27 13:11:20 2015 [Info] 	recoil: 0.000010
+Fri Nov 27 13:11:20 2015 [Info] 	direction: 0.500000
+Fri Nov 27 13:11:20 2015 [Info] Integrator parameters:
+Fri Nov 27 13:11:20 2015 [Info] 	Time step: 0.157080
+Fri Nov 27 13:11:20 2015 [Info] 	RESPA steps: 500
+Fri Nov 27 13:11:20 2015 [Info] 	Will take 100 steps to allow ions to equilibrate,
+Fri Nov 27 13:11:20 2015 [Info] 	 then 10000 steps while collecting data
+Fri Nov 27 13:11:20 2015 [Info] Coulomb Force using 2 threads.
+Fri Nov 27 13:11:20 2015 [Info] Random seed 213
+Fri Nov 27 13:11:20 2015 [Info] Laser parameters:
+Fri Nov 27 13:11:20 2015 [Info] 	Wavelength: 0.000000
+Fri Nov 27 13:11:20 2015 [Info] 	delta: 0.000000
+Fri Nov 27 13:11:20 2015 [Info] 	I/Isat: 1.000000
+Fri Nov 27 13:11:20 2015 [Info] Verlet integration.
+Fri Nov 27 13:11:20 2015 [Info] Running cool down.
+Fri Nov 27 13:11:20 2015 [Debug] Started MeanEnergyListener

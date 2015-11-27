@@ -66,15 +66,13 @@ inline void LaserCooledIon::kick(double dt) {
 	Vector3D f(0,0,0);
     double time_per_loop = 1e-8;
     for(double i = 0.0; i < dt; i += time_per_loop){
-       if (ElecState == 1) {f = Emit(time_per_loop);}
-	   else if (ElecState == 0) {f = Absorb(time_per_loop) * -1.0;}
-       f /= dt;
+       if (ElecState == 1) {f = Emit(time_per_loop)/dt;}
+	   else if (ElecState == 0) {f = Absorb(time_per_loop) * -1.0/dt;}
 	   this->Ion::kick(dt, f);
     }
     return;
 }
 
-//added function
 /**
  * @brief Find the stimulated emission/absorption probability based on the spontaneous emission probability and information about the
  * laser beam
@@ -101,7 +99,6 @@ double LaserCooledIon::fscatt() {
 	
 }
 
-// added function
 /**
  * @brief Increase the velocity by a vector orientated randomly over a sphere
  *
@@ -117,7 +114,6 @@ Vector3D LaserCooledIon::isoEmit(){
     return SphVec;
 }
 
-//added function
 Vector3D LaserCooledIon::Emit(double dt) {
     
     Vector3D SphVecRet(0.0,0.0,0.0);
@@ -130,8 +126,7 @@ Vector3D LaserCooledIon::Emit(double dt) {
     }
     return SphVecRet;
 }	
-
-// added function  
+ 
 Vector3D LaserCooledIon::Absorb(double dt){
     
     Vector3D slow(0.0,0.0,0.0);

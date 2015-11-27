@@ -43,7 +43,9 @@ void VerletIntegrator::evolve(double dt) {
 
     coulomb_force = coulomb_.get_force();
     i = 0;
-    for (auto ion : ions_->get_ions() ) {
+    #pragma omp parallel for
+    for (int k = 0; k < length; k++){
+        auto ion =* (_ions.begin() + j);
         // Update velocity over second half time-step
         ion->kick(half_dt, coulomb_force[i++] );
         ion->heat(half_dt);   // Heating

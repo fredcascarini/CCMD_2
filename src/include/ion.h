@@ -52,6 +52,7 @@ class Ion {
     std::string formula()                   const {return ionType_.formula;}
     const Vector3D& get_pos()               const {return pos_;}
     const Vector3D& get_vel()               const {return vel_;}
+    const int& get_state()                  const {return ElecState;}
     double get_mass()                       const {return ionType_.mass;}
     double get_charge()                     const {return ionType_.charge;}
     const Stats<Vector3D> get_posStats()    const {return posStats_;}
