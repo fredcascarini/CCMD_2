@@ -82,19 +82,16 @@ inline void LaserCooledIon::kick(double dt) {
  */
 double LaserCooledIon::fscatt() {
     
-    double pi = 3.14159265359;
+    const double pi = 3.14159265359;
     double Gamma = 1.4e5;//ionType_.A21;
-    double IdIsat = lp_.IdIsat;
+    const double IdIsat = lp_.IdIsat;
     double delta = Gamma; //lp_.delta;
-	double Gamma2 = Gamma*Gamma;
-    double Gamma3 = Gamma2*Gamma;
-	Vector3D k(0,0,(2*pi) / lp_.wavelength );
+	const double k = (2*pi) / lp_.wavelength ;
     
-    double gamma = 0.5 * (Gamma3);
+    double gamma = 0.5 * (Gamma*Gamma*Gamma);
     gamma *= IdIsat;
-    double x = delta + vel_.dot(vel_,k);
-    double x2 = x*x;
-    gamma /= (Gamma2 + (4 * x2));
+    const double x = delta + vel_.z * k;
+    gamma /= (Gamma*Gamma + (4 * x*x));
     return gamma;
 	
 }
@@ -107,7 +104,7 @@ double LaserCooledIon::fscatt() {
  */
 Vector3D LaserCooledIon::isoEmit(){
     
-	double h = 6.62607e-34;
+	const double h = 6.62607e-34;
     Vector3D SphVec = heater_.random_sphere_vector();
 	SphVec *=(h/lp_.wavelength);
     
@@ -116,25 +113,26 @@ Vector3D LaserCooledIon::isoEmit(){
 
 Vector3D LaserCooledIon::Emit(double dt) {
     
-    Vector3D SphVecRet(0.0,0.0,0.0);
     double fs = fscatt(); //Probability of stimulated emission s^-1
     fs += 1.4e-8; //Probability of spontaneous emission s^-1 from NIST
     fs *= dt;
+    
     if (heater_.testfscatt(fs)){
-        SphVecRet = isoEmit();
+       Vector3D SphVecRet(0.0,0.0,0.0);
+       SphVecRet = isoEmit();
 	   ElecState = 0;
     }
     return SphVecRet;
 }	
  
 Vector3D LaserCooledIon::Absorb(double dt){
-    
-    Vector3D slow(0.0,0.0,0.0);
-    double h = 6.62607e-34;
+ 
     double fs = fscatt(); //Probability of stimulated absorption s^-1
     fs *= dt;
 
     if (heater_.testfscatt(fs)){
+        Vector3D slow(0.0,0.0,0.0);
+        const double h = 6.62607e-34;
         double recoil_momentum = (h/lp_.wavelength);
         slow = Vector3D(0.0,0.0,recoil_momentum);
 	   ElecState = 1;

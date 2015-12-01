@@ -55,8 +55,10 @@ public:
         double rnumu = 12.0;
         double rnumv = 12.0;
         
-        while ((rnumu > 1.0) | (rnumv > 1.0) | (rnumu < 0.0) | (rnumv < 0.0)){
+        while ((rnumu > 1.0) | (rnumu < 0.0)){
 		rnumu = norm_dist(generator);
+        }
+        while ((rnumv > 1.0)|(rnumv<0.0)){}
 		rnumv = norm_dist(generator);
         }
 		double theta = 2 * pi * rnumu;
