@@ -116,9 +116,9 @@ Vector3D LaserCooledIon::Emit(double dt) {
     double fs = fscatt(); //Probability of stimulated emission s^-1
     fs += 1.4e-8; //Probability of spontaneous emission s^-1 from NIST
     fs *= dt;
+    Vector3D SphVecRet(0.0,0.0,0.0);
     
     if (heater_.testfscatt(fs)){
-       Vector3D SphVecRet(0.0,0.0,0.0);
        SphVecRet = isoEmit();
 	   ElecState = 0;
     }
@@ -129,9 +129,9 @@ Vector3D LaserCooledIon::Absorb(double dt){
  
     double fs = fscatt(); //Probability of stimulated absorption s^-1
     fs *= dt;
+    Vector3D slow(0.0,0.0,0.0);
 
     if (heater_.testfscatt(fs)){
-        Vector3D slow(0.0,0.0,0.0);
         const double h = 6.62607e-34;
         double recoil_momentum = (h/lp_.wavelength);
         slow = Vector3D(0.0,0.0,recoil_momentum);
