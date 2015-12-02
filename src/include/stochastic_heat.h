@@ -50,17 +50,11 @@ public:
 	
 	Vector3D random_sphere_vector() {
 		
-		double pi = 3.14159265359;
+		const double pi = 3.14159265359;
 	    
-        double rnumu = 12.0;
-        double rnumv = 12.0;
+        double rnumu = flat_dist(generator);
+        double rnumv = flat_dist(generator);
         
-        while ((rnumu > 1.0) | (rnumu < 0.0)){
-		rnumu = norm_dist(generator);
-        }
-        while ((rnumv > 1.0)|(rnumv<0.0)){}
-		rnumv = norm_dist(generator);
-        }
 		double theta = 2 * pi * rnumu;
 		double phi = acos((2 * rnumv) -1);
 		double rndsphx = cos(theta) * sin(phi);
@@ -71,11 +65,7 @@ public:
 	}
     
     bool testfscatt(double fscatt){
-        double rnum = 12.0;
-        while ((rnum > 1.0) | (rnum < 0.0)){
-		rnum = norm_dist(generator);
-        }
-        return (rnum < fscatt);       
+        return (flat_dist(generator) < fscatt);       
     }
 };
 

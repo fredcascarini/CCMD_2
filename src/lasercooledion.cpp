@@ -66,9 +66,9 @@ inline void LaserCooledIon::kick(double dt) {
 	Vector3D f(0,0,0);
     double time_per_loop = 1e-8;
     for(double i = 0.0; i < dt; i += time_per_loop){
-       if (ElecState == 1) {f = Emit(time_per_loop)/dt;}
-	   else if (ElecState == 0) {f = Absorb(time_per_loop) * -1.0/dt;}
-	   this->Ion::kick(dt, f);
+       double fs = fscatt()*dt;
+       if ((ElecState == 1) && heater_.testfscatt(fs + (dt*1.4e8))) {f = Emit(time_per_loop)/dt; this->Ion::kick(time_per_loop, f);}
+	       else if ((ElecState == 0) && heater_.testfscatt(fs)) {f = Absorb(time_per_loop) * -1.0/dt; this->Ion::kick(time_per_loop, f);} 
     }
     return;
 }
@@ -113,30 +113,17 @@ Vector3D LaserCooledIon::isoEmit(){
 
 Vector3D LaserCooledIon::Emit(double dt) {
     
-    double fs = fscatt(); //Probability of stimulated emission s^-1
-    fs += 1.4e-8; //Probability of spontaneous emission s^-1 from NIST
-    fs *= dt;
-    Vector3D SphVecRet(0.0,0.0,0.0);
-    
-    if (heater_.testfscatt(fs)){
-       SphVecRet = isoEmit();
-	   ElecState = 0;
-    }
+    Vector3D SphVecRet = isoEmit();
+	ElecState = 0;
     return SphVecRet;
 }	
  
 Vector3D LaserCooledIon::Absorb(double dt){
  
-    double fs = fscatt(); //Probability of stimulated absorption s^-1
-    fs *= dt;
-    Vector3D slow(0.0,0.0,0.0);
-
-    if (heater_.testfscatt(fs)){
-        const double h = 6.62607e-34;
-        double recoil_momentum = (h/lp_.wavelength);
-        slow = Vector3D(0.0,0.0,recoil_momentum);
-	   ElecState = 1;
-    }
+    const double h = 6.62607e-34;
+    const double recoil_momentum = (h/lp_.wavelength);
+    Vector3D slow = Vector3D(0.0,0.0,recoil_momentum);
+	ElecState = 1;
 	return slow;
 }
 
