@@ -81,7 +81,7 @@ class TrappedIon : public Ion {
 
     virtual void kick(double dt);
     virtual void velocity_scale(double dt) {}
-
+    
     TrappedIon(const TrappedIon&) = delete;
     const TrappedIon& operator=(const TrappedIon&) = delete;
 
@@ -92,7 +92,7 @@ class TrappedIon : public Ion {
 
 class LaserCooledIon : public TrappedIon {
  public:
-    LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type, const SimParams& sp, const LaserParams& lp);
+    LaserCooledIon(const IonTrap_ptr ion_trap, const TrapParams& trap_params, const IonType& type, const SimParams& sp, const LaserParams& lp);
     ~LaserCooledIon() {}
 
     void kick(double dt);
@@ -108,6 +108,7 @@ class LaserCooledIon : public TrappedIon {
 	Vector3D isoEmit();
     Stochastic_heat heater_;
     Vector3D get_friction() const;
+    const TrapParams& trap_params; 
 };
 
 /// Ion pointer type.

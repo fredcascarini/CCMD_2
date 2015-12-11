@@ -12,8 +12,8 @@ trap {
 integrator {
     stepsPerPeriod 20
     respasteps  500       ; Respa inner loop steps
-    coolperiods 5
-    histperiods  500
+    coolperiods 40000
+    histperiods 40000
 }
 image {
     makeimage   true
@@ -28,7 +28,7 @@ simulation {
     seed        213
 }
 ionnumbers {
-    Ca      90
+    Ca      30
 }
 iontype {
     CaF {

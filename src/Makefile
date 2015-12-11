@@ -22,10 +22,10 @@ BOOST_INCLUDE = /u/tps/crennick/boost_1_55_0
 
 
 intel: INCLUDE_DIRS := $(BOOST_INCLUDE) ./include
-gnu: INCLUDE_DIRS :=  ./include /opt/local/include C:\MinGW\boost_1_58_0 C:\MinGW\lib\gcc\mingw32\4.8.1\include C:\mingw\include\libpng
+gnu: INCLUDE_DIRS :=  ./include /opt/local/include C:\MinGW\boost_1_58_0 C:\MinGW\lib\gcc\mingw32\4.8.1\include C:\mingw\include\libpng C:\mingw\dcmt0.6.2\include
 
 intel: LIBRARY_DIR := -LC:\MinGW\mingw32\lib\gcc\mingw32\4.8.1 C:\mingw\include\libpng
-gnu: LIBRARY_DIR := -LC:\mingw\include\libpng
+gnu: LIBRARY_DIR := -LC:\mingw\include\libpng -LC:\mingw\dcmt0.6.2\lib
 LIBRARIES := -lpng -lz
 
 CPPFLAGS += $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))

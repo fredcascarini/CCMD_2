@@ -35,8 +35,8 @@
  *  @param ion_trap A pointer to the ion trap.
  *  @param type     A pointer to ion parameters.
  */
-LaserCooledIon::LaserCooledIon(const IonTrap_ptr ion_trap, const IonType& type, const SimParams& sp, const LaserParams& lp): 
-	TrappedIon(ion_trap, type, lp), heater_(sp.random_seed) {
+LaserCooledIon::LaserCooledIon(const IonTrap_ptr ion_trap,const TrapParams& trap_params, const IonType& type, const SimParams& sp, const LaserParams& lp): 
+	TrappedIon(ion_trap, type, lp), heater_(sp.random_seed), trap_params(trap_params) {
     heater_.set_kick_size(sqrt(ionType_.recoil));
 }
 
@@ -60,13 +60,14 @@ inline void LaserCooledIon::kick(double dt) {
     else
         this->Ion::kick(dt, -pressure);
 
+    double dtred = dt/trap_params.freq;
     // 1D Laser cooling friction force
     // This force must be evaluated last to allow its effect to be
     // undone by the call to velocity_scale
 	Vector3D f(0,0,0);
     double time_per_loop = 1e-8;
-    for(double i = 0.0; i < dt; i += time_per_loop){
-       double fs = fscatt()*dt;
+    for(double i = 0.0; i < (dtred); i += time_per_loop){
+       double fs = fscatt()*time_per_loop;
        if ((ElecState == 1) && heater_.testfscatt(fs + (dt*1.4e8))) {f = Emit(time_per_loop)/dt; this->Ion::kick(time_per_loop, f);}
 	       else if ((ElecState == 0) && heater_.testfscatt(fs)) {f = Absorb(time_per_loop) * -1.0/dt; this->Ion::kick(time_per_loop, f);} 
     }
@@ -92,28 +93,17 @@ double LaserCooledIon::fscatt() {
     gamma *= IdIsat;
     const double x = delta + vel_.z * k;
     gamma /= (Gamma*Gamma + (4 * x*x));
-    return gamma;
-	
+    return gamma;	
 }
 
 /**
  * @brief Increase the velocity by a vector orientated randomly over a sphere
- *
- * @param lp	A pointer to the laser parameters
- * @param type	A pointer to the ion parameters 
  */
-Vector3D LaserCooledIon::isoEmit(){
-    
-	const double h = 6.62607e-34;
-    Vector3D SphVec = heater_.random_sphere_vector();
-	SphVec *=(h/lp_.wavelength);
-    
-    return SphVec;
-}
-
 Vector3D LaserCooledIon::Emit(double dt) {
     
-    Vector3D SphVecRet = isoEmit();
+    const double h = 6.62607e-34;
+    Vector3D SphVec = heater_.random_sphere_vector();
+	SphVec *=(h/lp_.wavelength);
 	ElecState = 0;
     return SphVecRet;
 }	

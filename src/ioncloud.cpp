@@ -100,7 +100,7 @@ IonCloud::IonCloud(const IonTrap_ptr ion_trap, const CloudParams& cp,
             if (it.is_laser_cooled) {
                 ionVec_.push_back(
                         std::make_shared<LaserCooledIon>(
-                            ion_trap, it, simParams_, lp_));
+                            ion_trap, tp, it, simParams_, lp_));
             } else {
                 ionVec_.push_back(
                         std::make_shared<TrappedIon>(ion_trap, it, lp_));
