@@ -24,7 +24,7 @@ void VerletIntegrator::evolve(double dt) {
     int j = 0;
     auto _ions = ions_->get_ions();
     long length = _ions.size();
-    #pragma omp parallel for num_threads(4)
+    #pragma omp parallel for 
     for (int j = 0; j < length; j++){
         auto ion =* (_ions.begin() + j);
         // Calculate velocity at half time-step, uses Coulomb force from
@@ -43,7 +43,7 @@ void VerletIntegrator::evolve(double dt) {
 
     coulomb_force = coulomb_.get_force();
     i = 0;
-    #pragma omp parallel for num_threads(4)
+    #pragma omp parallel for 
     for (int k = 0; k < length; k++){
         auto ion =* (_ions.begin() + k);
         // Update velocity over second half time-step

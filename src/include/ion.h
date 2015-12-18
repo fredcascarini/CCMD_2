@@ -104,7 +104,7 @@ class LaserCooledIon : public TrappedIon {
     LaserCooledIon(const LaserCooledIon&) = delete;
     const LaserCooledIon& operator=(const LaserCooledIon&) = delete;
  private:
-	double fscatt();
+	double fscatt(double LaserDirection);
 	Vector3D isoEmit();
     Stochastic_heat heater_;
     Vector3D get_friction() const;

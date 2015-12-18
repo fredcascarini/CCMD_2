@@ -24,6 +24,8 @@
 
 #include <stdlib.h>
 
+#include <assert.h>
+
 #include <cmath>
 
 #include "include/vector3D.h"
@@ -60,16 +62,28 @@ inline void LaserCooledIon::kick(double dt) {
     else
         this->Ion::kick(dt, -pressure);
 
-    double dtred = dt/trap_params.freq;
+    const double dtred = dt;
+    const double force_scale = std::pow(trap_params.energy_scale, 0.5)/trap_params.time_scale;
     // 1D Laser cooling friction force
     // This force must be evaluated last to allow its effect to be
     // undone by the call to velocity_scale
 	Vector3D f(0,0,0);
-    double time_per_loop = 1e-8;
+    double time_per_loop = (1e-9)/trap_params.time_scale;
     for(double i = 0.0; i < (dtred); i += time_per_loop){
-       double fs = fscatt()*time_per_loop;
-       if ((ElecState == 1) && heater_.testfscatt(fs + (dt*1.4e8))) {f = Emit(time_per_loop)/dt; this->Ion::kick(time_per_loop, f);}
-	       else if ((ElecState == 0) && heater_.testfscatt(fs)) {f = Absorb(time_per_loop) * -1.0/dt; this->Ion::kick(time_per_loop, f);} 
+       double fs1 = fscatt(1)*time_per_loop;
+       double fs2 = fscatt(-1)*time_per_loop;
+       //std::cout<<vel_.z<<"v\n"<<std::flush;
+       assert(fs1<1 && fs2<1);
+       if (ElecState == 1){
+           if (fs1>fs2 && heater_.testfscatt(fs1 + (time_per_loop*1.4e8))) {f = Emit(time_per_loop)*1.0/(time_per_loop*1e-25); this->Ion::kick(time_per_loop, f);}
+	       if (fs2>fs1 && heater_.testfscatt(fs2 + (time_per_loop*1.4e8))) {f = Emit(time_per_loop)*-1.0/(time_per_loop*1e-25); this->Ion::kick(time_per_loop, f);}
+       
+       }
+       else if (ElecState == 0) {
+           if (fs1>fs2 && heater_.testfscatt(fs1)) {f = Absorb(time_per_loop) *-1.0/(time_per_loop*1e-25); this->Ion::kick(time_per_loop, f);} 
+           if (fs2>fs1 && heater_.testfscatt(fs2)) {f = Absorb(time_per_loop) *1.0/(time_per_loop*1e-25); this->Ion::kick(time_per_loop, f);}
+       }
+    //std::cout<<fs<<"f\n"<<std::flush;
     }
     return;
 }
@@ -81,17 +95,17 @@ inline void LaserCooledIon::kick(double dt) {
  * @param lp	A pointer to the laser parameters
  * @param type	A pointer to the ion parameters 
  */
-double LaserCooledIon::fscatt() {
+double LaserCooledIon::fscatt(double LaserDirection) {
     
     const double pi = 3.14159265359;
-    double Gamma = 1.4e5;//ionType_.A21;
-    const double IdIsat = lp_.IdIsat;
-    double delta = Gamma; //lp_.delta;
-	const double k = (2*pi) / lp_.wavelength ;
+    double Gamma = 1.4e8*trap_params.time_scale;//ionType_.A21;
+    const double IdIsat = 1;//lp_.IdIsat;
+    double delta = 5e-20; //lp_.delta;
+	const double k = (2*pi*trap_params.length_scale) / lp_.wavelength ;
     
     double gamma = 0.5 * (Gamma*Gamma*Gamma);
     gamma *= IdIsat;
-    const double x = delta + vel_.z * k;
+    const double x = delta - LaserDirection*vel_.z * k;
     gamma /= (Gamma*Gamma + (4 * x*x));
     return gamma;	
 }
@@ -105,7 +119,7 @@ Vector3D LaserCooledIon::Emit(double dt) {
     Vector3D SphVec = heater_.random_sphere_vector();
 	SphVec *=(h/lp_.wavelength);
 	ElecState = 0;
-    return SphVecRet;
+    return SphVec;
 }	
  
 Vector3D LaserCooledIon::Absorb(double dt){
@@ -123,7 +137,8 @@ Vector3D LaserCooledIon::Absorb(double dt){
  *  @return Friction vector.
  */
 Vector3D LaserCooledIon::get_friction() const {
-    return Vector3D(0.0, 0.0, ionType_.mass*ionType_.beta*vel_.z);
+//    return Vector3D(0.0, 0.0, ionType_.mass*ionType_.beta*vel_.z);
+    assert(false);
 }
 
 /**
