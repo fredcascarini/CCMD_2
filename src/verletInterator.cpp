@@ -1,5 +1,5 @@
 #include <vector>
-#include <omp.h>
+//#include <omp.h>
 
 #include "include/integrator.h"
 #include "include/ion.h"
@@ -24,7 +24,11 @@ void VerletIntegrator::evolve(double dt) {
     int j = 0;
     auto _ions = ions_->get_ions();
     long length = _ions.size();
-    #pragma omp parallel for 
+    
+    //#pragma omp parallel 
+    //{
+        
+ //   #pragma omp parallel for 
     for (int j = 0; j < length; j++){
         auto ion =* (_ions.begin() + j);
         // Calculate velocity at half time-step, uses Coulomb force from
@@ -43,7 +47,8 @@ void VerletIntegrator::evolve(double dt) {
 
     coulomb_force = coulomb_.get_force();
     i = 0;
-    #pragma omp parallel for 
+    
+//    #pragma omp parallel for 
     for (int k = 0; k < length; k++){
         auto ion =* (_ions.begin() + k);
         // Update velocity over second half time-step
@@ -52,6 +57,8 @@ void VerletIntegrator::evolve(double dt) {
         ion->kick(half_dt);   // Trap, plus heating if LaserCooled.
     }
 
+    //}
+    
     // Update trap again.
     coulomb_.update();
     trap_->evolve(half_dt);

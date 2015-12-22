@@ -75,13 +75,13 @@ inline void LaserCooledIon::kick(double dt) {
        //std::cout<<vel_.z<<"v\n"<<std::flush;
        assert(fs1<1 && fs2<1);
        if (ElecState == 1){
-           if (fs1>fs2 && heater_.testfscatt(fs1 + (time_per_loop*1.4e8))) {f = Emit(time_per_loop)*1.0/(time_per_loop*1e-25); this->Ion::kick(time_per_loop, f);}
-	       if (fs2>fs1 && heater_.testfscatt(fs2 + (time_per_loop*1.4e8))) {f = Emit(time_per_loop)*-1.0/(time_per_loop*1e-25); this->Ion::kick(time_per_loop, f);}
+           if (fs1>fs2 && heater_.testfscatt(fs1 + (time_per_loop*1.4e8))) {f = Emit(time_per_loop)*1.0/(time_per_loop*80e-27); this->Ion::kick(time_per_loop, f);}
+	       if (fs2>fs1 && heater_.testfscatt(fs2 + (time_per_loop*1.4e8))) {f = Emit(time_per_loop)*1.0/(time_per_loop*80e-27); this->Ion::kick(time_per_loop, f);}
        
        }
        else if (ElecState == 0) {
-           if (fs1>fs2 && heater_.testfscatt(fs1)) {f = Absorb(time_per_loop) *-1.0/(time_per_loop*1e-25); this->Ion::kick(time_per_loop, f);} 
-           if (fs2>fs1 && heater_.testfscatt(fs2)) {f = Absorb(time_per_loop) *1.0/(time_per_loop*1e-25); this->Ion::kick(time_per_loop, f);}
+           if (fs1>fs2 && heater_.testfscatt(fs1)) {f = Absorb(time_per_loop) *-1.0/(time_per_loop*5e-27); this->Ion::kick(time_per_loop, f);} 
+           if (fs2>fs1 && heater_.testfscatt(fs2)) {f = Absorb(time_per_loop) *1.0/(time_per_loop*5e-27); this->Ion::kick(time_per_loop, f);}
        }
     //std::cout<<fs<<"f\n"<<std::flush;
     }
@@ -100,7 +100,7 @@ double LaserCooledIon::fscatt(double LaserDirection) {
     const double pi = 3.14159265359;
     double Gamma = 1.4e8*trap_params.time_scale;//ionType_.A21;
     const double IdIsat = 1;//lp_.IdIsat;
-    double delta = 5e-20; //lp_.delta;
+    double delta = 15*Gamma; //lp_.delta;
 	const double k = (2*pi*trap_params.length_scale) / lp_.wavelength ;
     
     double gamma = 0.5 * (Gamma*Gamma*Gamma);
@@ -137,7 +137,7 @@ Vector3D LaserCooledIon::Absorb(double dt){
  *  @return Friction vector.
  */
 Vector3D LaserCooledIon::get_friction() const {
-//    return Vector3D(0.0, 0.0, ionType_.mass*ionType_.beta*vel_.z);
+    return Vector3D(0.0, 0.0, ionType_.mass*ionType_.beta*vel_.z);
     assert(false);
 }
 
