@@ -357,7 +357,7 @@ CloudParams::CloudParams(const std::string& file_name) {
         ionType.is_laser_cooled = ionTypeTree.get<bool>("lasercooled", false);
         ionType.recoil = ionTypeTree.get<double>("recoil", 0.0);
         ionType.direction = ionTypeTree.get<double>("direction", 0.5);
-		ionType.A21 = ionTypeTree.get<float>("A21",1);
+		ionType.A21 = ionTypeTree.get<double>("A21",0);
         if (ionType.direction < 0.0) {
             std::stringstream ss;
             ss << "Warning: direction=" << ionType.direction;

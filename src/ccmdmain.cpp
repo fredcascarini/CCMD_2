@@ -109,7 +109,7 @@ int main(int argc, char * const argv[]) {
     if (path[path.length()-1] != '/')
         path += "/";
 
-    log.initialise(Logger::DEBUG, path + "log.txt");
+    log.initialise(Logger::INFO, path + "log.txt");
     log.info("CCMD - Coulomb crystal molecular dynamics");
     log.info("Version 2.2.0 alpha");
 
@@ -184,7 +184,7 @@ int main(int argc, char * const argv[]) {
 //------------------------------------------------------------------------------
 // Histogram
 //------------------------------------------------------------------------------
-        log.info("Acquiring histogram data");
+        log.debug("Acquiring histogram data");
 
         KE = 0;
         double etot = 0;
