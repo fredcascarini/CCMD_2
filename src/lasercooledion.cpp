@@ -73,7 +73,7 @@ inline void LaserCooledIon::kick(double dt) {
        double fs1 = fscatt(1)*time_per_loop;
        double fs2 = fscatt(-1)*time_per_loop;
        double amu = 1.66053904e-27;
-       //std::cout<<vel_.z<<"v\n"<<std::flush;
+       //std::cout<<fscatt(1)<<"\n"<<std::flush;
        assert(fs1<1 && fs2<1);
        if (ElecState == 1){
            if (fs1>fs2 && heater_.testfscatt(fs1 + (time_per_loop*ionType_.A21))) {f = Emit(time_per_loop)*1.0/(time_per_loop*ionType_.mass*amu); this->Ion::kick(time_per_loop, f);}

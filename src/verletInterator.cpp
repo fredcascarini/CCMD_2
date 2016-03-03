@@ -1,6 +1,8 @@
 #include <vector>
-//#include <omp.h>
-
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+#include<cstdio>
 #include "include/integrator.h"
 #include "include/ion.h"
 #include "include/ioncloud.h"
@@ -20,49 +22,68 @@ void VerletIntegrator::evolve(double dt) {
     double half_dt = dt/2.0;
 
     std::vector<Vector3D> coulomb_force = coulomb_.get_force();
-    int i = 0;
     int j = 0;
+    int k = 0;
     auto _ions = ions_->get_ions();
     long length = _ions.size();
-    
-    //#pragma omp parallel 
-    //{
-        
- //   #pragma omp parallel for 
+
+#ifdef _OPENMP  
+  
+#pragma omp parallel default(none) private(k,j) shared(_ions, length, coulomb_force, half_dt, dt)
+{
+#pragma omp single 
+{
+    if(n_iter_ == 1){
+    printf("Threads: %d \n", omp_get_num_threads());
+    }
+}      
+   #pragma omp for 
+#endif
+
     for (int j = 0; j < length; j++){
         auto ion =* (_ions.begin() + j);
         // Calculate velocity at half time-step, uses Coulomb force from
         // previous time step.
-        ion->kick(half_dt, coulomb_force[i++]);
+        ion->kick(half_dt, coulomb_force[j]);
         ion->heat(half_dt);   // Heating
         ion->kick(half_dt);   // Trap, plus heating if LaserCooled.
 
         // Update positions by full time step
          ion->drift(dt);
     }
-
+#ifdef _OPENMP
+    #pragma omp single
+#endif
+    {
     // Calculate new acceleration
     coulomb_.update();
     trap_->evolve(half_dt);
 
     coulomb_force = coulomb_.get_force();
-    i = 0;
-    
-//    #pragma omp parallel for 
+    //i = 0;
+    }
+#ifdef _OPENMP    
+    #pragma omp for
+#endif 
     for (int k = 0; k < length; k++){
         auto ion =* (_ions.begin() + k);
         // Update velocity over second half time-step
-        ion->kick(half_dt, coulomb_force[i++] );
+        ion->kick(half_dt, coulomb_force[k] );
         ion->heat(half_dt);   // Heating
         ion->kick(half_dt);   // Trap, plus heating if LaserCooled.
     }
-
-    //}
-    
+#ifdef _OPENMP
+    #pragma omp single
+#endif    
+    {
     // Update trap again.
     coulomb_.update();
     trap_->evolve(half_dt);
 
     // Tell everyone we're done
     notifyListeners(n_iter_++);
+    }
 }
+#ifdef _OPENMP
+}
+#endif

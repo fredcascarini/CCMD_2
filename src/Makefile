@@ -1,5 +1,3 @@
-EXECUTABLE:= ../bin/ccmd 
-
 intel: CC = icpc
 intel: LD = icpc
 
@@ -17,6 +15,7 @@ OBJS := $(C_OBJS) $(CXX_OBJS)
 BUILD_DIR := ../build/
 OBJS := $(addprefix $(BUILD_DIR), $(OBJS))
 VPATH = ./ 
+EXECUTABLE:= ../bin/ccmd 
 
 BOOST_INCLUDE = /u/tps/crennick/boost_1_55_0
 
@@ -31,12 +30,9 @@ LIBRARIES := -lpng -lz
 CPPFLAGS += $(foreach includedir,$(INCLUDE_DIRS),-I$(includedir))
 
 intel: CPPFLAGS += -O3 -std=c++11
-#gnu: CPPFLAGS += -Ofast -std=c++11 -march=native -ffast-math -flto
-#gnu: LDFLAGS += -Ofast -std=c++11 -march=native -ffast-math -flto
 gnu: CPPFLAGS +=  -Ofast -std=c++11  -march=native -ffast-math -m64 -funroll-loops
 gnu: LDFLAGS +=  -Ofast -std=c++11 -march=native -ffast-math -m64 -funroll-loops
 gnu: CFLAGS += -fopenmp
-# gnu: LDFLAGS = -std=c++11
 
 #LIBRARY_PATH = $(foreach librarydir,$(LIBRARIES),$(librarydir))
 
@@ -57,8 +53,9 @@ $(BUILD_DIR)%.o : %.cpp
 # $(BUILD_DIR)bodysystemcuda.o: bodysystemcuda.cu bodysystemcuda.cpp include/bodysystemcuda.h
 # 	$(NVCC_PATH)/nvcc -O3 --include-path $(CUTIL_LIB) -c bodysystemcuda.cu -o $(BUILD_DIR)bodysystemcuda.o 
 
-clean:
-	@- $(RM) $(EXECUTABLE)
-	@- $(RM) $(OBJS)
+#clean:
+#    $(info $$EXECUTABLE is [${EXECUTABLE}])#
+#	@- $(RM) $(EXECUTABLE)
+#	@- $(RM) $(OBJS)
 
-distclean: clean
+#distclean: clean

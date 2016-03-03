@@ -14,6 +14,9 @@
 #include <mutex>
 #include <thread>
 #include <vector>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 #include "include/ioncloud.h"
 #include "include/ion.h"
@@ -45,6 +48,7 @@ void CoulombForce::update() {
     Vector3D r1, r2, f;
     double r, r3;
     int q1, q2;
+    int i,j;
     int cloud_size = cloud_->number_of_ions();
 
     // Initialise vector that will contain force on each ion when we're done.
@@ -52,11 +56,20 @@ void CoulombForce::update() {
     Vector3D null_vec = Vector3D(0.0, 0.0, 0.0);
     std::fill(force_.begin(), force_.end(), null_vec);
 
+#ifdef _OPENMP
+
+//#pragma omp parallel default(shared) private(i,j, r1, q1, r2, q2, r3, f, r)
+//{
+    
+//#pragma omp for collapse(2)
+    
+#endif
+
     // sum Coulomb force over all particles
-    for (int i = 0; i < cloud_size; ++i) {
-        r1 = cloud_->ionVec_[i]->get_pos();
-        q1 = cloud_->ionVec_[i]->get_charge();
-        for (int j = i+1; j < cloud_size; ++j) {
+    for (i = 0; i < cloud_size; ++i) {
+        for (j = i+1; j < cloud_size; ++j) {
+            r1 = cloud_->ionVec_[i]->get_pos();
+            q1 = cloud_->ionVec_[i]->get_charge();
             r2 = cloud_->ionVec_[j]->get_pos();
             q2 = cloud_->ionVec_[j]->get_charge();
 
@@ -64,13 +77,27 @@ void CoulombForce::update() {
             r = Vector3D::dist(r1, r2);
             r3 = r*r*r;
             f = (r1-r2)/r3*q1*q2;
+#ifdef _OPENMP
+//#pragma omp critical (force_update) 
+//{
+#endif
 
             // update sum for ion "i"
             force_[i] += f;
             // update sum for ion "j"
             force_[j] -= f;
+            
+#ifdef _OPENMP
+//}
+#endif            
+            
         }
     }
+    
+#ifdef _OPENMP
+//}
+#endif    
+    
 }
 
 
