@@ -26,18 +26,13 @@ void VerletIntegrator::evolve(double dt) {
     int k = 0;
     auto _ions = ions_->get_ions();
     long length = _ions.size();
+    std::cout<<n_iter_<<"\t";
 
 #ifdef _OPENMP  
   
-#pragma omp parallel default(none) private(k,j) shared(_ions, length, coulomb_force, half_dt, dt)
-{
-#pragma omp single 
-{
-    if(n_iter_ == 1){
-    printf("Threads: %d \n", omp_get_num_threads());
-    }
-}      
-   #pragma omp for 
+//#pragma omp parallel default(shared) private(k,j) shared(_ions, length, coulomb_force, half_dt, dt)
+//{     
+//#pragma omp for 
 #endif
 
     for (int j = 0; j < length; j++){
@@ -52,7 +47,7 @@ void VerletIntegrator::evolve(double dt) {
          ion->drift(dt);
     }
 #ifdef _OPENMP
-    #pragma omp single
+//    #pragma omp single
 #endif
     {
     // Calculate new acceleration
@@ -63,7 +58,7 @@ void VerletIntegrator::evolve(double dt) {
     //i = 0;
     }
 #ifdef _OPENMP    
-    #pragma omp for
+//    #pragma omp for
 #endif 
     for (int k = 0; k < length; k++){
         auto ion =* (_ions.begin() + k);
@@ -73,7 +68,7 @@ void VerletIntegrator::evolve(double dt) {
         ion->kick(half_dt);   // Trap, plus heating if LaserCooled.
     }
 #ifdef _OPENMP
-    #pragma omp single
+//    #pragma omp single
 #endif    
     {
     // Update trap again.
@@ -85,5 +80,5 @@ void VerletIntegrator::evolve(double dt) {
     }
 }
 #ifdef _OPENMP
-}
+//}
 #endif
