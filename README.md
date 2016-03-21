@@ -2,4 +2,11 @@
 
 <i>Adapted version of CCMD</i>
 
-Here I am trying to implement the changes tested in the Python LaserCooling repo into the main CCMD program, firstly in order to remove the beta parameter.
+This is an updated version of the CCMD code, which removes the beta parameter, replacing it with the einstein A parameter, and considering laser parameters. A sample trap.info input file is included in the config 
+directories.
+
+To compile:
+run 'make' in /src directory
+
+To run:
+run 'ccmd.exe [path to trap.info file]' in /bin directory. Output is saved to the same directory as the trap.info file.
