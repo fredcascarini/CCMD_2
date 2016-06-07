@@ -1,39 +1,42 @@
-Wed Dec 09 11:07:57 2015 [Info] CCMD - Coulomb crystal molecular dynamics
-Wed Dec 09 11:07:57 2015 [Info] Version 2.2.0 alpha
-Wed Dec 09 11:07:57 2015 [Info] Loading input file ../config/trap.info
-Wed Dec 09 11:07:57 2015 [Debug] Loading trap parameters.
-Wed Dec 09 11:07:57 2015 [Info] Trap parameters:
-Wed Dec 09 11:07:57 2015 [Info] 	Vrf: 150.750000
-Wed Dec 09 11:07:57 2015 [Info] 	End cap: 1.500000
-Wed Dec 09 11:07:57 2015 [Info] 	eta: 0.244000
-Wed Dec 09 11:07:57 2015 [Info] 	r0: 0.003500
-Wed Dec 09 11:07:57 2015 [Info] 	z0: 0.002750
-Wed Dec 09 11:07:57 2015 [Info] 	freq: 3850000.000000
-Wed Dec 09 11:07:57 2015 [Debug] Energy scale factor 2.3471e-023 J per unit
-Wed Dec 09 11:07:57 2015 [Info] Making a cosine trap.
-Wed Dec 09 11:07:57 2015 [Info]  ions:
-Wed Dec 09 11:07:57 2015 [Info] 	Number: 900
-Wed Dec 09 11:07:57 2015 [Info] 	Mass: 40.000000
-Wed Dec 09 11:07:57 2015 [Info] 	Charge: 1
-Wed Dec 09 11:07:57 2015 [Info] 	Laser Cooled.
-Wed Dec 09 11:07:57 2015 [Info] 	beta: 0.000000
-Wed Dec 09 11:07:57 2015 [Info] 	recoil: 0.000010
-Wed Dec 09 11:07:57 2015 [Info] 	direction: 0.500000
-Wed Dec 09 11:07:57 2015 [Info]  ions:
-Wed Dec 09 11:07:57 2015 [Info] 	Number: 200
-Wed Dec 09 11:07:57 2015 [Info] 	Mass: 130.000000
-Wed Dec 09 11:07:57 2015 [Info] 	Charge: 1
-Wed Dec 09 11:07:57 2015 [Info] Integrator parameters:
-Wed Dec 09 11:07:57 2015 [Info] 	Time step: 0.001571
-Wed Dec 09 11:07:57 2015 [Info] 	RESPA steps: 50
-Wed Dec 09 11:07:57 2015 [Info] 	Will take 40000000 steps to allow ions to equilibrate,
-Wed Dec 09 11:07:57 2015 [Info] 	 then 10000000 steps while collecting data
-Wed Dec 09 11:07:57 2015 [Info] Coulomb Force using 0 threads.
-Wed Dec 09 11:07:57 2015 [Info] Random seed 213
-Wed Dec 09 11:07:57 2015 [Info] Laser parameters:
-Wed Dec 09 11:07:57 2015 [Info] 	Wavelength: 130.000000
-Wed Dec 09 11:07:57 2015 [Info] 	delta: 1.000000
-Wed Dec 09 11:07:57 2015 [Info] 	I/Isat: 1.000000
-Wed Dec 09 11:07:57 2015 [Info] Verlet integration.
-Wed Dec 09 11:07:57 2015 [Info] Running cool down.
-Wed Dec 09 11:07:57 2015 [Debug] Started MeanEnergyListener
+Wed Mar 23 13:00:15 2016 [Info] CCMD - Coulomb crystal molecular dynamics
+Wed Mar 23 13:00:15 2016 [Info] Version 2.2.0 alpha
+Wed Mar 23 13:00:15 2016 [Info] Loading input file ../config/trap.info
+Wed Mar 23 13:00:15 2016 [Debug] Loading trap parameters.
+Wed Mar 23 13:00:15 2016 [Info] Trap parameters:
+Wed Mar 23 13:00:15 2016 [Info] 	Vrf: 150.750000
+Wed Mar 23 13:00:15 2016 [Info] 	End cap: 1.500000
+Wed Mar 23 13:00:15 2016 [Info] 	eta: 0.244000
+Wed Mar 23 13:00:15 2016 [Info] 	r0: 0.003500
+Wed Mar 23 13:00:15 2016 [Info] 	z0: 0.002750
+Wed Mar 23 13:00:15 2016 [Info] 	freq: 3850000.000000
+Wed Mar 23 13:00:15 2016 [Debug] Energy scale factor 2.3471e-023 J per unit
+Wed Mar 23 13:00:15 2016 [Info] Making a cosine trap.
+Wed Mar 23 13:00:15 2016 [Info]  ions:
+Wed Mar 23 13:00:15 2016 [Info] 	Number: 900
+Wed Mar 23 13:00:15 2016 [Info] 	Mass: 40.000000
+Wed Mar 23 13:00:15 2016 [Info] 	Charge: 1
+Wed Mar 23 13:00:15 2016 [Info] 	Laser Cooled.
+Wed Mar 23 13:00:15 2016 [Info] 	beta: 0.000000
+Wed Mar 23 13:00:15 2016 [Info] 	recoil: 0.000010
+Wed Mar 23 13:00:15 2016 [Info] 	direction: 0.500000
+Wed Mar 23 13:00:15 2016 [Info]  ions:
+Wed Mar 23 13:00:15 2016 [Info] 	Number: 200
+Wed Mar 23 13:00:15 2016 [Info] 	Mass: 130.000000
+Wed Mar 23 13:00:15 2016 [Info] 	Charge: 1
+Wed Mar 23 13:00:15 2016 [Info] Integrator parameters:
+Wed Mar 23 13:00:15 2016 [Info] 	Time step: 0.001571
+Wed Mar 23 13:00:15 2016 [Info] 	RESPA steps: 50
+Wed Mar 23 13:00:15 2016 [Info] 	Will take 40000000 steps to allow ions to equilibrate,
+Wed Mar 23 13:00:15 2016 [Info] 	 then 10000000 steps while collecting data
+Wed Mar 23 13:00:15 2016 [Info] Coulomb Force using 0 threads.
+Wed Mar 23 13:00:15 2016 [Info] Random seed 213
+Wed Mar 23 13:00:15 2016 [Info] Laser parameters:
+Wed Mar 23 13:00:15 2016 [Info] 	Wavelength: 130.000000
+Wed Mar 23 13:00:15 2016 [Info] 	delta: 1.000000
+Wed Mar 23 13:00:15 2016 [Info] 	I/Isat: 1.000000
+Wed Mar 23 13:00:15 2016 [Debug] Constructing Ion Cloud
+Wed Mar 23 13:00:15 2016 [Debug] Finished constructing Ion Cloud
+Wed Mar 23 13:00:15 2016 [Debug] Initialising integrator
+Wed Mar 23 13:00:16 2016 [Debug] Finished initialising integrator
+Wed Mar 23 13:00:16 2016 [Info] Running cool down.
+Wed Mar 23 13:00:16 2016 [Debug] Started MeanEnergyListener

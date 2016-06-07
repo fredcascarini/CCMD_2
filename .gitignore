@@ -54,3 +54,5 @@ build/*
 config*/*
 *.exe
 Doxygen/*
+ARC runs/200 100 100 P/Ammonia-d3_image.png
+ARC runs/Profile/profile_2.out
